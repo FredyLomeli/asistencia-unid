@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Docente;
+use App\RegistroDocente;
 use Illuminate\Http\Request;
 
-class DocenteController extends Controller
+class RegistroDocenteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class DocenteController extends Controller
      */
     public function index()
     {
-        $docentes = Docente::paginate(15);
-        return view('docente.index',compact('docentes'));
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class DocenteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Docente  $docente
+     * @param  \App\RegistroDocente  $registroDocente
      * @return \Illuminate\Http\Response
      */
-    public function show(Docente $docente)
+    public function show(RegistroDocente $registroDocente)
     {
         //
     }
@@ -53,10 +52,10 @@ class DocenteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Docente  $docente
+     * @param  \App\RegistroDocente  $registroDocente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Docente $docente)
+    public function edit(RegistroDocente $registroDocente)
     {
         //
     }
@@ -65,10 +64,10 @@ class DocenteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Docente  $docente
+     * @param  \App\RegistroDocente  $registroDocente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Docente $docente)
+    public function update(Request $request, RegistroDocente $registroDocente)
     {
         //
     }
@@ -76,10 +75,10 @@ class DocenteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Docente  $docente
+     * @param  \App\RegistroDocente  $registroDocente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Docente $docente)
+    public function destroy(RegistroDocente $registroDocente)
     {
         //
     }

@@ -11,4 +11,8 @@
 |
 */
 
-Route::get('/', 'DocenteController@index')->name('docente.index');
+Route::get('/', function () {
+    return view('index');
+})->name('inicio');
+
+Route::get('/docentes', 'DocenteController@index')->name('docente.index');
