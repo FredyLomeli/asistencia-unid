@@ -109,9 +109,12 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+            <section class="content" >
+                <div id="frexal">
                 {{--  inicio de contenido  --}}
                 @yield('contenido')
+                @yield('modals')
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -129,6 +132,6 @@
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/js/adminlte.min.js') }}"></script>
+    @yield('scriptsheet')
 </body>
-
 </html>

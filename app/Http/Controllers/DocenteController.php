@@ -32,7 +32,7 @@ class DocenteController extends Controller
      */
     public function create()
     {
-        //
+        return view('docente.create');
     }
 
     /**
@@ -43,7 +43,8 @@ class DocenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        dd($data);
     }
 
     /**
@@ -54,7 +55,7 @@ class DocenteController extends Controller
      */
     public function show(Docente $docente)
     {
-        //
+        return view('docente.show',compact('docente'));
     }
 
     /**
@@ -65,7 +66,7 @@ class DocenteController extends Controller
      */
     public function edit(Docente $docente)
     {
-        //
+        dd($docente);
     }
 
     /**
@@ -77,7 +78,8 @@ class DocenteController extends Controller
      */
     public function update(Request $request, Docente $docente)
     {
-        //
+        $data = $request->all();
+        dd($data);
     }
 
     /**
@@ -88,6 +90,6 @@ class DocenteController extends Controller
      */
     public function destroy(Docente $docente)
     {
-        //
+        dd($docente);
     }
 }

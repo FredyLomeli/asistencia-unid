@@ -21,7 +21,7 @@ Listado de docentes
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Responsive Hover Table</h3>
+                    <a class="btn btn-default" href="{{ route('docente.create') }}"><li class="fa fa-file-o"></li> Nuevo docente</a>
                     <div class="box-tools">
                         <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control pull-right"
@@ -38,28 +38,26 @@ Listado de docentes
                         <tr>
                             @foreach($cabeceras as $cabecera)
                                 @if ($cabecera != "No")
-                                <th>{{ $cabecera }}</th>
+                                <th style="text-align: center">{{ $cabecera }}</th>
                                 @endif
                             @endforeach
-                            <th colspan="3">Herramientas</th>
+                            <th colspan="3" style="text-align: center">Acciones</th>
                         </tr>
                         @foreach ($docentes as $docente)
                         <tr>
                             @foreach($campos as $campo)
-                                @if ($campo != "id")
-                                <td>{{ $docente[$campo] }}</td>
+                                @if($campo === "estatus")
+                                <td style="text-align: center">{{ $docente[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
+                                @elseif ($campo != "id")
+                                <td style="text-align: center">{{ $docente[$campo] }}</td>
                                 @endif
                             @endforeach
-                            <td><a href="{{ route('docente.show', $docente) }}"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i></a></td>
-                            <td>
-                                <form action="{{ route('docente.destroy', $docente) }}" method="POST">
-                                        {!! method_field('DELETE') !!}
-                                        {!! csrf_field() !!}
-                                        <button type="submit" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
-                                </form>
-                            </td>
-
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.show', $docente) }}"><i class="fa fa-eye"></i> Ver Detalles</a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a></td>
+                            <td style="text-align: center">
+                                <a class="btn btn-default" data-toggle="modal" data-target="#myModal" 
+                                @click="eliminarDocente( {{ $docente->id }}, '{{ $docente->id_banner }}', '{{ $docente->nombre }} {{ $docente->apellido_paterno }} {{ $docente->apellido_materno }}' )">
+                                <li class="fa fa-trash"></li> Eliminar</a></td>
                         </tr>
                         @endforeach
                     </table>
@@ -70,4 +68,57 @@ Listado de docentes
             </div>
         </div>
     </div>
+@endsection
+
+@section('modals')
+<div class="modal modal-danger fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header -danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Eliminar docente</h4>
+            </div>
+            <div class="modal-body" >
+                Esta por eliminar el docente con los siguientes datos : <br>
+                ID : @{{ idDocente }}, Nombre: @{{ nombreDocente }} <br>
+                Realmente, ¿Deseas aceptar esta accion?
+            </div>
+            <div class="modal-footer">
+                <form role="form" class="form-horizontal" method="post" :action="crearUrl()">
+                    {{method_field('DELETE')}} {{csrf_field()}}
+                    <input type="hidden" id="id" name="id" v-model="id">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-outline">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scriptsheet')
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var vm = new Vue({
+            el: '#frexal',
+            data: {
+                id: 0,
+                idDocente: "",
+                nombreDocente: "",
+            },
+            methods:{
+                eliminarDocente: function (sId,sIdDocente,sNombreDocente) {
+                    if(sId>0){
+                        this.id = sId;
+                        this.idDocente = sIdDocente;
+                        this.nombreDocente = sNombreDocente;
+                        crearUrl();
+                    }
+                },
+                crearUrl: function(){
+                    return "http://localhost:8000/docentes/" + this.id + "/delete"
+                }
+            }
+        });
+    </script>
 @endsection
