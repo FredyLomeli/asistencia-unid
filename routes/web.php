@@ -16,3 +16,9 @@ Route::get('/', function () {
 })->name('inicio');
 
 Route::get('/docentes', 'DocenteController@index')->name('docente.index');
+Route::get('/docentes/{docente}', 'DocenteController@index')
+    ->where('docente', '[0-9]+')->name('docente.show');
+Route::get('/docentes/{docente}/editar', 'DocenteController@edit')
+    ->where('docente', '[0-9]+')->name('docente.edit');
+Route::delete('/docentes/{docente}/delete', 'DocenteController@destroy')
+    ->where('docente', '[0-9]+')->name('docente.destroy');

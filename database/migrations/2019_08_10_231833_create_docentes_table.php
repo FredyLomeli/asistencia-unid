@@ -15,7 +15,17 @@ class CreateDocentesTable extends Migration
     {
         Schema::create('docentes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('id_banner',10)->unique();
+            $table->string('nombre',100);
+            $table->string('apellido_paterno',100)->nullable();
+            $table->string('apellido_materno',100)->nullable();
+            $table->tinyInteger('estatus');
+            $table->timestamp('fecha_registro')->useCurrent();
+            $table->text('comentario')->nullable();
+            $table->timestamp('fecha_baja')->nullable();
+            $table->string('adicional_1')->nullable();
+            $table->string('adicional_2')->nullable();
+            // $table->timestamps();
         });
     }
 

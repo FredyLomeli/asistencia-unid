@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Docente;
+use App\Configuracion;
 use Illuminate\Http\Request;
 
 class DocenteController extends Controller
@@ -14,8 +15,14 @@ class DocenteController extends Controller
      */
     public function index()
     {
-        $docentes = Docente::paginate(15);
-        return view('docente.index',compact('docentes'));
+        $cabeceras = Configuracion::where('nombre','NombreCamposTablaDocente')
+            ->where('tipo', 6)->value('datos');
+        $cabeceras = explode(',', $cabeceras);
+        $campos = Configuracion::where('nombre','CamposTablaDocente')
+            ->where('tipo', 7)->value('datos');
+        $campos = explode(',', $campos);
+        $docentes = Docente::select($campos)->paginate(15);
+        return view('docente.index',compact('docentes','campos','cabeceras'));
     }
 
     /**
