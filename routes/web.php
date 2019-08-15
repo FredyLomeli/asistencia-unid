@@ -17,9 +17,12 @@ Route::get('/', function () {
 
 Route::get('/docentes', 'DocenteController@index')->name('docente.index');
 Route::get('/docentes/nuevo', 'DocenteController@create')->name('docente.create');
+Route::post('/docentes/crear', 'DocenteController@store')->name('docente.store');
 Route::get('/docentes/{docente}', 'DocenteController@show')
     ->where('docente', '[0-9]+')->name('docente.show');
 Route::get('/docentes/{docente}/editar', 'DocenteController@edit')
     ->where('docente', '[0-9]+')->name('docente.edit');
+Route::put('/docentes/{docente}/actualizar', 'DocenteController@update')
+    ->where('docente', '[0-9]+')->name('docente.update');
 Route::delete('/docentes/{docente}/delete', 'DocenteController@destroy')
     ->where('docente', '[0-9]+')->name('docente.destroy');

@@ -23,9 +23,14 @@ Listado de docentes
                 <div class="box-header">
                     <a class="btn btn-default" href="{{ route('docente.create') }}"><li class="fa fa-file-o"></li> Nuevo docente</a>
                     <div class="box-tools">
-                        <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                        <div class="input-group input-group-sm" >
+                            <label for="estatus" class="control-label">Estado</label>
+                            <select class="form-control" id="estatus" name="estatus" >
+                                <option value="1" selected>Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
                             <input type="text" name="table_search" class="form-control pull-right"
-                                placeholder="Search">
+                                placeholder="Busqueda">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>

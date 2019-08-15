@@ -43,8 +43,17 @@ class DocenteController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        dd($data);
+        $data = request()->validate([
+            'id_banner' => 'required|between:8,10|unique:docentes,id_banner',
+            'nombre' => 'required|between:0,100',
+            'apellido_paterno' => 'required|between:0,100',
+            'apellido_materno' => 'between:0,100',
+            'estatus' => 'required',
+            'comentario' => 'between:0,500',
+        ]);
+
+        Docente::create($data);
+        return redirect()->route('docente.index');
     }
 
     /**
@@ -66,7 +75,7 @@ class DocenteController extends Controller
      */
     public function edit(Docente $docente)
     {
-        dd($docente);
+        return view('docente.edit',compact('docente'));
     }
 
     /**
@@ -78,8 +87,17 @@ class DocenteController extends Controller
      */
     public function update(Request $request, Docente $docente)
     {
-        $data = $request->all();
-        dd($data);
+        $data = request()->validate([
+            'id_banner' => 'required|between:8,10|unique:docentes,id_banner,'.$docente->id,
+            'nombre' => 'required|between:0,100',
+            'apellido_paterno' => 'required|between:0,100',
+            'apellido_materno' => 'between:0,100',
+            'estatus' => 'required',
+            'comentario' => 'between:0,500',
+        ]);
+
+        $docente->update($data);
+        return redirect()->route('docente.show',$docente);
     }
 
     /**

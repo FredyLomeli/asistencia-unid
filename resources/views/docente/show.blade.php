@@ -22,10 +22,10 @@ Vista detalle
         <div class="box-header with-border">
             <div class="row">
                 <div class="col-xs-9 col-lg-7">
-                    <a class="btn btn-default" href="{{ route('docente.index') }}"><i class="fa fa-eye"></i> Regresar</a>
+                    <a class="btn btn-default pull-right" href="{{ route('docente.index') }}"><i class="fa fa-list"></i> Regresar</a>
                 </div>
                 <div class="col-xs-3 col-lg-1">
-                    <a class="btn btn-default" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a>
+                    <a class="btn btn-default pull-right" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a>
                 </div>
             </div>
         </div>
@@ -77,18 +77,17 @@ Vista detalle
             <div class="form-group">
                 <label for="comentario" class="col-lg-3 control-label">Comentarios</label>
                 <div class="col-lg-5">
-                    <textarea type="text" class="form-control" id="comentario" name="comentario" disabled>
-                            {{ $docente->comentario }}
-                    </textarea>
+                    <textarea type="text" class="form-control" id="comentario" 
+                    name="comentario" disabled>{{ $docente->comentario }}</textarea>
                 </div>
             </div>
         <div class="box-footer">
             <div class="row">
                 <div class="col-xs-9 col-lg-7">
-                    <button type="submit" class="btn btn-default pull-right">Cancel</button>
+                    <a class="btn btn-default pull-right" href="{{ route('docente.index') }}"><i class="fa fa-list"></i> Regresar</a>
                 </div>
                 <div class="col-xs-3 col-lg-1">
-                    <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                    <a class="btn btn-default pull-right" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a>
                 </div>
             </div>
         </div>
