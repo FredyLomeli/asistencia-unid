@@ -13,16 +13,24 @@ class DocenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filtro = $request->get('filtro');
+        $registros = $request->get('registros');
+
+        if(!$registros) $registros = 15;
+            
         $cabeceras = Configuracion::where('nombre','NombreCamposTablaDocente')
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
         $campos = Configuracion::where('nombre','CamposTablaDocente')
             ->where('tipo', 7)->value('datos');
         $campos = explode(',', $campos);
-        $docentes = Docente::select($campos)->paginate(15);
-        return view('docente.index',compact('docentes','campos','cabeceras'));
+        $docentes = Docente::select($campos)
+        ->orderBy('id','DESC')
+        ->busqueda($filtro)
+        ->paginate($registros);
+        return view('docente.index',compact('docentes','campos','cabeceras','filtro','registros'));
     }
 
     /**
@@ -108,6 +116,7 @@ class DocenteController extends Controller
      */
     public function destroy(Docente $docente)
     {
-        dd($docente);
+        $docente->delete();
+        return redirect()->route('docente.index');
     }
 }

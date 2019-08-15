@@ -16,4 +16,13 @@ class Docente extends Model
         'estatus',
         'comentario',
     ];
+
+    public function scopeBusqueda($query, $busqueda){
+        if($busqueda)
+            return $query->where('id_banner','LIKE', "%$busqueda%")
+                ->orWhere('nombre','LIKE', "%$busqueda%")
+                ->orWhere('apellido_paterno','LIKE', "%$busqueda%")
+                ->orWhere('apellido_materno','LIKE', "%$busqueda%")
+                ->orWhere('comentario','LIKE', "%$busqueda%");
+    }
 }
