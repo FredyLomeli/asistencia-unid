@@ -29,7 +29,7 @@ Sistema para el control de asistencia
         </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('inicio') }}">
+        <a href="{{ route('crn.index') }}">
             <div class="info-box bg-green">
                 <span class="info-box-icon"><i class="fa fa-book"></i></span>
 
@@ -40,7 +40,7 @@ Sistema para el control de asistencia
         </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('inicio') }}">
+        <a href="{{ route('horarioDocente.index') }}">
             <div class="info-box bg-yellow">
                 <span class="info-box-icon"><i class="fa fa-calendar-check-o"></i></span>
 

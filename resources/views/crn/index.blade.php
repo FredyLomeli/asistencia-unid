@@ -1,14 +1,14 @@
 @extends('layout')
 
-@section('title',"Listado de docentes")
+@section('title',"Listado de Materias")
 
-@section('asunto',"Docentes")
+@section('asunto',"Materias")
 
-@section('descripcion', "Listado de docentes")
+@section('descripcion', "Listado de Materias")
 
 @section('migajas')
 <li><a href="{{ route('inicio') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-<li class="active">Docentes</li>
+<li class="active">Materias</li>
 @endsection
 
 @section('contenido')
@@ -16,9 +16,9 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <form method="GET" action="{{ route('docente.index') }}">
+                    <form method="GET" action="{{ route('crn.index') }}">
                         <div class="form-group col-xs-12">
-                            <a class="btn btn-default col-xs-2" href="{{ route('docente.create') }}"><li class="fa fa-file-o"></li> Nuevo docente</a>
+                            <a class="btn btn-default col-xs-2" href="{{ route('crn.create') }}"><li class="fa fa-file-o"></li> Nuevo docente</a>
                             <div class="col-xs-3 col-md-1">
                                 <select class="form-control" id="registros" name="registros" >
                                     <option value="10" {{ $registros == 10 ? 'selected' : '' }}>10</option>
@@ -46,22 +46,20 @@
                             @endforeach
                             <th colspan="3" style="text-align: center">Acciones</th>
                         </tr>
-                        @foreach ($docentes as $docente)
+                        @foreach ($crns as $crn)
                         <tr>
                             @foreach($campos as $campo)
-                                @if($campo === "estatus")
-                                <td style="text-align: center">{{ $docente[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
-                                @elseif($campo === "comentario")
-                                <td style="text-align: center">{{ Str::limit($docente[$campo],30) }}</td>
+                                @if($campo === "estado")
+                                <td style="text-align: center">{{ $crn[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
                                 @elseif ($campo != "id")
-                                <td style="text-align: center">{{ $docente[$campo] }}</td>
+                                <td style="text-align: center">{{ $crn[$campo] }}</td>
                                 @endif
                             @endforeach
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.show', $docente) }}"><i class="fa fa-eye"></i> Ver Detalles</a></td>
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('crn.show', $crn) }}"><i class="fa fa-eye"></i> Ver Detalles</a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('crn.edit', $crn) }}"><i class="fa fa-pencil"></i> Editar</a></td>
                             <td style="text-align: center">
                                 <a class="btn btn-default" data-toggle="modal" data-target="#myModal" 
-                                @click='eliminarDocente( {{ $docente->id }}, "{{ $docente->id_banner }}","{{ $docente->nombre }} {{ $docente->apellido_paterno }} {{ $docente->apellido_materno }}" )'>
+                                @click='eliminarMateria( {{ $crn->id }}, "{{ $crn->crn }}","{{ $crn->nombre }}" )'>
                                 <li class="fa fa-trash"></li> Eliminar</a>
                             </td>
                         </tr>
@@ -69,8 +67,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    {!! $docentes->links('docente.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
-                    {{-- {{ $docentes->links() }} --}}
+                    {!! $crns->links('crn.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
                 </div>
             </div>
         </div>
@@ -86,8 +83,8 @@
                 <h4 class="modal-title" id="myModalLabel">Eliminar docente</h4>
             </div>
             <div class="modal-body" >
-                Esta por eliminar el docente con los siguientes datos : <br>
-                ID : @{{ idDocente }}, Nombre: @{{ nombreDocente }} <br>
+                Esta por eliminar la Materia con los siguientes datos : <br>
+                CRN : @{{ crn }}, Nombre: @{{ nombreMateria }} <br>
                 Realmente, ¿Deseas aceptar esta accion?
             </div>
             <div class="modal-footer">
@@ -110,20 +107,20 @@
             el: '#frexal',
             data: {
                 id: 0,
-                idDocente: "",
-                nombreDocente: "",
+                crn: "",
+                nombreMateria: "",
             },
             methods:{
-                eliminarDocente: function (sId,sIdDocente,sNombreDocente) {
+                eliminarMateria: function (sId,sCrn,sNombreMateria) {
                     if(sId>0){
                         this.id = sId;
-                        this.idDocente = sIdDocente;
-                        this.nombreDocente = sNombreDocente;
+                        this.crn = sCrn;
+                        this.nombreMateria = sNombreMateria;
                         crearUrl();
                     }
                 },
                 crearUrl: function(){
-                    return "http://localhost:8000/docentes/" + this.id + "/delete"
+                    return "http://localhost:8000/materias/" + this.id + "/delete"
                 }
             }
         });

@@ -7,7 +7,7 @@ Docente ID : {{ $docente->id_banner }}
 @endsection
 
 @section('descripcion')
-Editcion de registro
+Edición de registro
 @endsection
 
 @section('migajas')

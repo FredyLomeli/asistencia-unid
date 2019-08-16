@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Crn;
+use App\Configuracion;
 use Illuminate\Http\Request;
 
 class CrnController extends Controller
@@ -19,17 +20,17 @@ class CrnController extends Controller
 
         if(!$registros) $registros = 15;
             
-        $cabeceras = Configuracion::where('nombre','NombreCamposTablaDocente')
+        $cabeceras = Configuracion::where('nombre','NombreCamposTablaCrn')
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
-        $campos = Configuracion::where('nombre','CamposTablaDocente')
+        $campos = Configuracion::where('nombre','CamposTablaCrn')
             ->where('tipo', 7)->value('datos');
         $campos = explode(',', $campos);
-        $docentes = Docente::select($campos)
+        $crns = Crn::select($campos)
         ->orderBy('id','DESC')
         ->busqueda($filtro)
         ->paginate($registros);
-        return view('docente.index',compact('docentes','campos','cabeceras','filtro','registros'));
+        return view('crn.index',compact('crns','campos','cabeceras','filtro','registros'));
     }
 
     /**
@@ -39,7 +40,7 @@ class CrnController extends Controller
      */
     public function create()
     {
-        return view('docente.create');
+        return view('crn.create');
     }
 
     /**
@@ -51,16 +52,13 @@ class CrnController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner',
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'crn' => 'required|between:5,8|unique:crn,crn',
+            'nombre' => 'required|between:0,254',
+            'estado' => 'required|integer|between:0,1',
         ]);
 
-        Docente::create($data);
-        return redirect()->route('docente.index');
+        Crn::create($data);
+        return redirect()->route('crn.index');
     }
 
     /**
@@ -71,7 +69,7 @@ class CrnController extends Controller
      */
     public function show(Crn $crn)
     {
-        return view('docente.show',compact('docente'));
+        return view('crn.show',compact('crn'));
     }
 
     /**
@@ -82,7 +80,7 @@ class CrnController extends Controller
      */
     public function edit(Crn $crn)
     {
-        return view('docente.edit',compact('docente'));
+        return view('crn.edit',compact('crn'));
     }
 
     /**
@@ -95,16 +93,13 @@ class CrnController extends Controller
     public function update(Request $request, Crn $crn)
     {
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner,'.$docente->id,
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'crn' => 'required|between:5,8|unique:crn,crn,'.$crn->id,
+            'nombre' => 'required|between:0,254',
+            'estado' => 'required|integer|between:0,1',
         ]);
 
-        $docente->update($data);
-        return redirect()->route('docente.show',$docente);
+        $crn->update($data);
+        return redirect()->route('crn.show',$crn);
     }
 
     /**
@@ -115,7 +110,7 @@ class CrnController extends Controller
      */
     public function destroy(Crn $crn)
     {
-        $docente->delete();
-        return redirect()->route('docente.index');
+        $crn->delete();
+        return redirect()->route('crn.index');
     }
 }

@@ -45,19 +45,19 @@ Route::put('/configuraciones/{configuracion}/actualizar', 'ConfiguracionControll
 Route::delete('/configuraciones/{configuracion}/delete', 'ConfiguracionController@destroy')
     ->where('configuracion', '[0-9]+')->name('configuracion.destroy');
 
-Route::get('/crns', 'CrnController@index')
+Route::get('/materias', 'CrnController@index')
     ->name('crn.index');
-Route::get('/crns/nuevo', 'CrnController@create')
+Route::get('/materias/nuevo', 'CrnController@create')
     ->name('crn.create');
-Route::post('/crns/crear', 'CrnController@store')
+Route::post('/materias/crear', 'CrnController@store')
     ->name('crn.store');
-Route::get('/crns/{crn}', 'CrnController@show')
+Route::get('/materias/{crn}', 'CrnController@show')
     ->where('crn', '[0-9]+')->name('crn.show');
-Route::get('/crns/{crn}/editar', 'CrnController@edit')
+Route::get('/materias/{crn}/editar', 'CrnController@edit')
     ->where('crn', '[0-9]+')->name('crn.edit');
-Route::put('/crns/{crn}/actualizar', 'CrnController@update')
+Route::put('/materias/{crn}/actualizar', 'CrnController@update')
     ->where('crn', '[0-9]+')->name('crn.update');
-Route::delete('/crns/{crn}/delete', 'CrnController@destroy')
+Route::delete('/cmaterias/{crn}/delete', 'CrnController@destroy')
     ->where('crn', '[0-9]+')->name('crn.destroy');
 
 Route::get('/horario/docente', 'HorarioMateriaDocenteController@index')

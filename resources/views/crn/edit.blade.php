@@ -2,31 +2,27 @@
 
 @section('title',"Control de asistencia")
 
-@section('asunto')
-Docente ID : {{ $docente->id_banner }}
-@endsection
+@section('asunto',"Materia CRN : $crn->crn")
 
-@section('descripcion')
-Editcion de registro
-@endsection
+@section('descripcion', "Edición de registro")
 
 @section('migajas')
 <li><a href="{{ route('inicio') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-<li><a href="{{ route('docente.index') }}"> Docentes</a></li>
+<li><a href="{{ route('crn.index') }}"> Materias</a></li>
 <li class="active">Edicion</li>
 @endsection
 
 @section('contenido')
 <div class="col-md-12">
     <div class="box box-info">
-        <form class="form-horizontal" method="post" action="{{ route('docente.update', $docente) }}">
+        <form class="form-horizontal" method="post" action="{{ route('crn.update', $crn) }}">
         <div class="box-header with-border">
             <div class="row">
                 <div class="col-xs-6 col-lg-6">
-                    <a class="btn btn-default pull-right" href="{{ route('docente.index') }}"><i class="fa fa-list"></i> Regresar</a>
+                    <a class="btn btn-default pull-right" href="{{ route('crn.index') }}"><i class="fa fa-list"></i> Regresar</a>
                 </div>
                 <div class="col-xs-3 col-lg-1">
-                    <a class="btn btn-default pull-right" href="{{ route('docente.show', $docente) }}"><i class="fa fa-times"></i> Cancelar</a>
+                    <a class="btn btn-default pull-right" href="{{ route('crn.show', $crn) }}"><i class="fa fa-times"></i> Cancelar</a>
                 </div>
                 <div class="col-xs-3 col-lg-1">
                     <button type="submit" class="btn btn-default pull-right"><i class="fa fa-save"></i> Guardar</button>
@@ -34,18 +30,18 @@ Editcion de registro
             </div>
         </div>
         <div class="box-body">
-            <div class="form-group {{ $errors->has('id_banner') ? ' has-error' : '' }}">
-                <label for="id_banner" class="col-lg-3 control-label">
-                    @if ($errors->has('id_banner'))
+            <div class="form-group {{ $errors->has('crn') ? ' has-error' : '' }}">
+                <label for="crn" class="col-lg-3 control-label">
+                    @if ($errors->has('crn'))
                     <i class="fa fa-times-circle-o"></i>
                     @endif
-                    ID:</label>
+                    CRN:</label>
                 <div class="col-lg-3">
-                    <input type="text" minlength="8" maxlength="10" class="form-control" id="id_banner" name="id_banner" 
-                    placeholder="ID DOCENTE" value="{{ old('id_banner', $docente->id_banner) }}" >
-                    @if ($errors->has('id_banner'))
+                    <input type="text" minlength="5" maxlength="8" class="form-control" id="crn" name="crn" 
+                    placeholder="63454" value="{{ old('crn', $crn->crn) }}" >
+                    @if ($errors->has('crn'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('id_banner') }}</strong>
+                        <strong>{{ $errors->first('crn') }}</strong>
                     </span>
                     @endif
                 </div>
@@ -55,10 +51,10 @@ Editcion de registro
                     @if ($errors->has('nombre'))
                     <i class="fa fa-times-circle-o"></i>
                     @endif
-                    Nombre(s)</label>
+                    Nombre</label>
                 <div class="col-lg-5">
-                    <input type="text" maxlength="100" class="form-control" id="nombre" name="nombre" 
-                    placeholder="JOSE" value="{{ old('nombre', $docente->nombre) }}">
+                    <input type="text" maxlength="250" class="form-control" id="nombre" name="nombre" 
+                    placeholder="Tecnologia Educativa" value="{{ old('nombre' , $crn->nombre)}}">
                     @if ($errors->has('nombre'))
                     <span class="help-block">
                         <strong>{{ $errors->first('nombre') }}</strong>
@@ -66,87 +62,33 @@ Editcion de registro
                     @endif
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
-                <label for="apellido_paterno" class="col-lg-3 control-label">
-                    @if ($errors->has('apellido_paterno'))
-                    <i class="fa fa-times-circle-o"></i>
-                    @endif
-                    Apellido Paterno</label>
-                <div class="col-lg-5">
-                    <input type="text" maxlength="100" class="form-control" id="apellido_paterno" name="apellido_paterno" 
-                    placeholder="PEREZ" value="{{ old('apellido_paterno', $docente->apellido_paterno) }}">
-                    @if ($errors->has('apellido_paterno'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('apellido_paterno') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('apellido_materno') ? ' has-error' : '' }}">
-                <label for="apellido_materno" class="col-lg-3 control-label">
-                    @if ($errors->has('apellido_materno'))
-                    <i class="fa fa-times-circle-o"></i>
-                    @endif
-                    Apellido Materno</label>
-                <div class="col-lg-5">
-                    <input type="text" maxlength="100" class="form-control" id="apellido_materno" name="apellido_materno" 
-                    placeholder="LOPEZ" value="{{ old('apellido_materno', $docente->apellido_materno) }}">
-                    @if ($errors->has('apellido_materno'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('apellido_materno') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('estatus') ? ' has-error' : '' }}">
-                <label for="estatus" class="col-lg-3 control-label">
-                    @if ($errors->has('estatus'))
+            <div class="form-group {{ $errors->has('estado') ? ' has-error' : '' }}">
+                <label for="estado" class="col-lg-3 control-label">
+                    @if ($errors->has('estado'))
                     <i class="fa fa-times-circle-o"></i>
                     @endif
                     Estado</label>
                 <div class="col-lg-5">
-                    <select class="form-control" id="estatus" name="estatus" >
-                        <option value="1" {{ old('estatus', $docente->estatus) == 1 ? 'selected' : '' }}>Activo</option>
-                        <option value="0" {{ old('estatus', $docente->estatus) == 0 ? 'selected' : '' }}>Inactivo</option>
+                    <select class="form-control" id="estado" name="estado" >
+                        <option value="1" {{ old('estado', $crn->estado) == 1 ? 'selected' : '' }}>Activo</option>
+                        <option value="0" {{ old('estado', $crn->estado) == 0 ? 'selected' : '' }}>Inactivo</option>
                     </select>
-                    @if ($errors->has('estatus'))
+                    @if ($errors->has('estado'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('estatus') }}</strong>
+                        <strong>{{ $errors->first('estado') }}</strong>
                     </span>
                     @endif
                 </div>
             </div>
-            <div class="form-group">
-                <label for="fecha" class="col-lg-3 control-label">Fecha registro</label>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control" id="fecha"
-                    value="{{ $docente->fecha_registro }}" disabled>
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('comentario') ? ' has-error' : '' }}">
-                <label for="comentario" class="col-lg-3 control-label">
-                    @if ($errors->has('comentario'))
-                    <i class="fa fa-times-circle-o"></i>
-                    @endif
-                    Comentarios</label>
-                <div class="col-lg-5">
-                    <textarea type="text" maxlength="500" class="form-control" id="comentario" 
-                    name="comentario">{{ old('comentario', $docente->comentario) }}</textarea>
-                    @if ($errors->has('comentario'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('comentario') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
+        </div>
         <div class="box-footer">
             <div class="row">
                 <div class="row">
                     <div class="col-xs-6 col-lg-6">
-                        <a class="btn btn-default pull-right" href="{{ route('docente.index') }}"><i class="fa fa-list"></i> Regresar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('crn.index') }}"><i class="fa fa-list"></i> Regresar</a>
                     </div>
                     <div class="col-xs-3 col-lg-1">
-                        <a class="btn btn-default pull-right" href="{{ route('docente.show', $docente) }}"><i class="fa fa-times"></i> Cancelar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('crn.show', $crn) }}"><i class="fa fa-times"></i> Cancelar</a>
                     </div>
                     <div class="col-xs-3 col-lg-1">
                         <button type="submit" class="btn btn-default pull-right"><i class="fa fa-save"></i> Guardar</button>

@@ -72,8 +72,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('docente.index') }}"><i class="fa fa-circle-o"></i> Docentes </a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Materias </a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Horarios </a></li>
+                            <li><a href="{{ route('crn.index') }}"><i class="fa fa-circle-o"></i> Materias </a></li>
+                            <li><a href="{{ route('horarioDocente.index') }}"><i class="fa fa-circle-o"></i> Horarios </a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Reportes </a></li>
                         </ul>
                     </li>

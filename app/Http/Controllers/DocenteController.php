@@ -56,7 +56,7 @@ class DocenteController extends Controller
             'nombre' => 'required|between:0,100',
             'apellido_paterno' => 'required|between:0,100',
             'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
+            'estatus' => 'required|integer|between:0,1',
             'comentario' => 'between:0,500',
         ]);
 
@@ -100,7 +100,7 @@ class DocenteController extends Controller
             'nombre' => 'required|between:0,100',
             'apellido_paterno' => 'required|between:0,100',
             'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
+            'estatus' => 'required|integer|between:0,1',
             'comentario' => 'between:0,500',
         ]);
 
