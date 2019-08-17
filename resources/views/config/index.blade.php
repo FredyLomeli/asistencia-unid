@@ -1,14 +1,14 @@
 @extends('layout')
 
-@section('title',"Listado de Materias")
+@section('title',"Listado de Configuraciones")
 
-@section('asunto',"Materias")
+@section('asunto',"Configuraciones")
 
-@section('descripcion', "Listado de Materias")
+@section('descripcion', "Listado de Configuraciones")
 
 @section('migajas')
 <li><a href="{{ route('inicio') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-<li class="active">Materias</li>
+<li class="active">Configuraciones</li>
 @endsection
 
 @section('contenido')
@@ -16,9 +16,9 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <form method="GET" action="{{ route('crn.index') }}">
+                    <form method="GET" action="{{ route('config.index') }}">
                         <div class="form-group col-xs-12">
-                            <a class="btn btn-default col-xs-2" href="{{ route('crn.create') }}"><li class="fa fa-file-o"></li> Nueva Materia</a>
+                            <a class="btn btn-default col-xs-2" href="{{ route('config.create') }}"><li class="fa fa-file-o"></li> Nueva configuracion</a>
                             <div class="col-xs-3 col-md-2">
                                 <select class="form-control" id="registros" name="registros" >
                                     <option value="10" {{ $registros == 10 ? 'selected' : '' }}>10</option>
@@ -39,27 +39,41 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
-                            @foreach($cabeceras as $cabecera)
-                                @if ($cabecera != "No")
-                                <th style="text-align: center">{{ $cabecera }}</th>
-                                @endif
-                            @endforeach
+                            <th style="text-align: center">ID</th>
+                            <th style="text-align: center">Nombre</th>
+                            <th style="text-align: center">Datos</th>
+                            <th style="text-align: center">Tipo</th>
                             <th colspan="3" style="text-align: center">Acciones</th>
                         </tr>
-                        @foreach ($crns as $crn)
+                        @foreach ($configuraciones as $configuracion)
                         <tr>
-                            @foreach($campos as $campo)
-                                @if($campo === "estado")
-                                <td style="text-align: center">{{ $crn[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
-                                @elseif ($campo != "id")
-                                <td style="text-align: center">{{ $crn[$campo] }}</td>
-                                @endif
-                            @endforeach
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('crn.show', $crn) }}"><i class="fa fa-eye"></i></a></td>
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('crn.edit', $crn) }}"><i class="fa fa-pencil"></i></a></td>
+                            <td style="text-align: center">{{ $configuracion->id }}</td>
+                            <td style="text-align: center">{{ $configuracion->nombre }}</td>
+                            <td style="text-align: center">{{ Str::limit($configuracion->datos,30) }}</td>
+                            <td style="text-align: center">
+                                @switch($configuracion->tipo)
+                                    @case(0) {{ "BloqueoDocentes" }} @break
+                                    @case(1) {{ "BloqueoCRN" }} @break
+                                    @case(2) {{ "BloqueoContraseña" }} @break
+                                    @case(3) {{ "Contraseña" }} @break
+                                    @case(4) {{ "Calendario" }} @break
+                                    @case(5) {{ "Asueto" }} @break
+                                    @case(6) {{ "NombredeCampos" }} @break
+                                    @case(7) {{ "CamposdeTabla" }} @break
+                                    @case(8) {{ "TamañodeCampos" }} @break
+                                    @case(9) {{ "NombredeCamposFiltro" }} @break
+                                    @case(10) {{ "CamposdeFiltro" }} @break
+                                    @case(11) {{ "Limitederegistros" }} @break
+                                    @default @break
+                                @endswitch
+                            </td>
+                            <td style="text-align: center"><a class="btn btn-default"
+                                href="{{ route('config.show', $configuracion) }}"><i class="fa fa-eye"></i></a></td>
+                            <td style="text-align: center"><a class="btn btn-default"
+                                href="{{ route('config.edit', $configuracion) }}"><i class="fa fa-pencil"></i></a></td>
                             <td style="text-align: center">
                                 <a class="btn btn-default" data-toggle="modal" data-target="#myModal"
-                                @click='eliminarMateria( {{ $crn->id }}, "{{ $crn->crn }}","{{ $crn->nombre }}" )'>
+                                @click='eliminarConfiguracion( {{ $configuracion->id }}, "{{ $configuracion->nombre }}" )'>
                                 <li class="fa fa-trash"></li></a>
                             </td>
                         </tr>
@@ -67,7 +81,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    {!! $crns->links('crn.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
+                    {!! $configuraciones->links('config.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
                 </div>
             </div>
         </div>
@@ -80,11 +94,11 @@
         <div class="modal-content">
             <div class="modal-header -danger">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar Materia</h4>
+                <h4 class="modal-title" id="myModalLabel">Eliminar Configuracion</h4>
             </div>
             <div class="modal-body" >
-                Esta por eliminar la Materia con los siguientes datos : <br>
-                CRN : @{{ crn }}, Nombre: @{{ nombreMateria }} <br>
+                Esta por eliminar la configuracion con los siguientes datos : <br>
+                ID : @{{ id }}, Nombre: @{{ nombreConfig }} <br>
                 Realmente, ¿Deseas aceptar esta accion?
             </div>
             <div class="modal-footer">
@@ -107,20 +121,18 @@
             el: '#frexal',
             data: {
                 id: 0,
-                crn: "",
-                nombreMateria: "",
+                nombreConfig: "",
             },
             methods:{
-                eliminarMateria: function (sId,sCrn,sNombreMateria) {
+                eliminarConfiguracion: function (sId,sNombreConfig) {
                     if(sId>0){
                         this.id = sId;
-                        this.crn = sCrn;
-                        this.nombreMateria = sNombreMateria;
+                        this.nombreConfig = sNombreConfig;
                         crearUrl();
                     }
                 },
                 crearUrl: function(){
-                    return "http://localhost:8000/materias/" + this.id + "/delete"
+                    return "http://localhost:8000/config/" + this.id + "/delete"
                 }
             }
         });

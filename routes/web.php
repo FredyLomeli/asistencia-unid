@@ -31,19 +31,19 @@ Route::delete('/docentes/{docente}/delete', 'DocenteController@destroy')
     ->where('docente', '[0-9]+')->name('docente.destroy');
 
 Route::get('/configuraciones', 'ConfiguracionController@index')
-    ->name('configuracion.index');
+    ->name('config.index');
 Route::get('/configuraciones/nuevo', 'ConfiguracionController@create')
-    ->name('configuracion.create');
+    ->name('config.create');
 Route::post('/configuraciones/crear', 'ConfiguracionController@store')
-    ->name('configuracion.store');
+    ->name('config.store');
 Route::get('/configuraciones/{configuracion}', 'ConfiguracionController@show')
-    ->where('configuracion', '[0-9]+')->name('configuracion.show');
+    ->where('configuracion', '[0-9]+')->name('config.show');
 Route::get('/configuraciones/{configuracion}/editar', 'ConfiguracionController@edit')
-    ->where('configuracion', '[0-9]+')->name('configuracion.edit');
+    ->where('configuracion', '[0-9]+')->name('config.edit');
 Route::put('/configuraciones/{configuracion}/actualizar', 'ConfiguracionController@update')
-    ->where('configuracion', '[0-9]+')->name('configuracion.update');
+    ->where('configuracion', '[0-9]+')->name('config.update');
 Route::delete('/configuraciones/{configuracion}/delete', 'ConfiguracionController@destroy')
-    ->where('configuracion', '[0-9]+')->name('configuracion.destroy');
+    ->where('configuracion', '[0-9]+')->name('config.destroy');
 
 Route::get('/materias', 'CrnController@index')
     ->name('crn.index');
@@ -57,7 +57,7 @@ Route::get('/materias/{crn}/editar', 'CrnController@edit')
     ->where('crn', '[0-9]+')->name('crn.edit');
 Route::put('/materias/{crn}/actualizar', 'CrnController@update')
     ->where('crn', '[0-9]+')->name('crn.update');
-Route::delete('/cmaterias/{crn}/delete', 'CrnController@destroy')
+Route::delete('/materias/{crn}/delete', 'CrnController@destroy')
     ->where('crn', '[0-9]+')->name('crn.destroy');
 
 Route::get('/horario/docente', 'HorarioMateriaDocenteController@index')

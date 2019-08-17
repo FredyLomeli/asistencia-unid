@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Crn;
 use App\Configuracion;
@@ -14,12 +13,12 @@ class CrnModuleTest extends TestCase
     /** @test */
     public function it_loads_the_materias_list(){
         Configuracion::create([
-            'nombre' => 'NombreCamposTablaCrn', 
+            'nombre' => 'NombreCamposTablaCrn',
             'datos' => 'CRN,NOMBRE,ESTADO,ID',
             'tipo' => 6,
         ]);
         Configuracion::create([
-            'nombre' => 'CamposTablaCrn', 
+            'nombre' => 'CamposTablaCrn',
             'datos' => 'crn,nombre,estado,id',
             'tipo' => 7,
         ]);
@@ -143,7 +142,7 @@ class CrnModuleTest extends TestCase
             ->assertSessionHasErrors('nombre');
         $this->assertEquals(0,Crn::count());
     }
-   
+
     /** @test */
     function the_estado_is_required_to_create(){
         $this->from(route('crn.create'))

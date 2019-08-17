@@ -19,7 +19,7 @@
                     <form method="GET" action="{{ route('docente.index') }}">
                         <div class="form-group col-xs-12">
                             <a class="btn btn-default col-xs-2" href="{{ route('docente.create') }}"><li class="fa fa-file-o"></li> Nuevo docente</a>
-                            <div class="col-xs-3 col-md-1">
+                            <div class="col-xs-3 col-md-2">
                                 <select class="form-control" id="registros" name="registros" >
                                     <option value="10" {{ $registros == 10 ? 'selected' : '' }}>10</option>
                                     <option value="15" {{ $registros == 15 ? 'selected' : '' }}>15</option>
@@ -28,7 +28,7 @@
                                     <option value="100" {{ $registros == 100 ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
-                            <div class="col-xs-6 col-md-8">
+                            <div class="col-xs-6 col-md-7">
                                 <input type="text" name="filtro" id="filtro" class="form-control pull-right"
                                 placeholder="Busqueda" value="{{ $filtro }}">
                             </div>
@@ -53,16 +53,16 @@
                                 <td style="text-align: center">{{ $docente[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
                                 @elseif($campo === "comentario")
                                 <td style="text-align: center">{{ Str::limit($docente[$campo],30) }}</td>
-                                @elseif ($campo != "id")
+                        @elseif ($campo != "id")
                                 <td style="text-align: center">{{ $docente[$campo] }}</td>
                                 @endif
                             @endforeach
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.show', $docente) }}"><i class="fa fa-eye"></i> Ver Detalles</a></td>
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i> Editar</a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.show', $docente) }}"><i class="fa fa-eye"></i></a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.edit', $docente) }}"><i class="fa fa-pencil"></i></a></td>
                             <td style="text-align: center">
-                                <a class="btn btn-default" data-toggle="modal" data-target="#myModal" 
+                                <a class="btn btn-default" data-toggle="modal" data-target="#myModal"
                                 @click='eliminarDocente( {{ $docente->id }}, "{{ $docente->id_banner }}","{{ $docente->nombre }} {{ $docente->apellido_paterno }} {{ $docente->apellido_materno }}" )'>
-                                <li class="fa fa-trash"></li> Eliminar</a>
+                                <li class="fa fa-trash"></li></a>
                             </td>
                         </tr>
                         @endforeach

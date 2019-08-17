@@ -1,4 +1,16 @@
 <?php
+// Tipo 0 Bloqueo Docentes
+// Tipo 1 Bloqueo CRN
+// Tipo 2 Bloqueo Contraseña
+// Tipo 3 Contraseña
+// Tipo 4 Calendario
+// Tipo 5 Asueto
+// Tipo 6 NombreCampos de Tablas
+// Tipo 7 Campos de Tablas
+// Tipo 8 TamañoCampos de Tablas
+// Tipo 9 NombreCamposFiltro de Tablas
+// Tipo 10 CamposFiltro de Tablas
+// Tipo 11 Limite de registros por tabla
 
 namespace App\Http\Controllers;
 
@@ -18,18 +30,11 @@ class ConfiguracionController extends Controller
         $registros = $request->get('registros');
 
         if(!$registros) $registros = 15;
-            
-        $cabeceras = Configuracion::where('nombre','NombreCamposTablaDocente')
-            ->where('tipo', 6)->value('datos');
-        $cabeceras = explode(',', $cabeceras);
-        $campos = Configuracion::where('nombre','CamposTablaDocente')
-            ->where('tipo', 7)->value('datos');
-        $campos = explode(',', $campos);
-        $docentes = Docente::select($campos)
-        ->orderBy('id','DESC')
+
+        $configuraciones = Configuracion::orderBy('id','DESC')
         ->busqueda($filtro)
         ->paginate($registros);
-        return view('docente.index',compact('docentes','campos','cabeceras','filtro','registros'));
+        return view('config.index',compact('configuraciones','filtro','registros'));
     }
 
     /**
@@ -39,7 +44,7 @@ class ConfiguracionController extends Controller
      */
     public function create()
     {
-        return view('docente.create');
+        return view('config.create');
     }
 
     /**
@@ -50,17 +55,16 @@ class ConfiguracionController extends Controller
      */
     public function store(Request $request)
     {
+        // $data = $request->all();
+        // dd($data);
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner',
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'nombre' => 'required|between:1,250|unique:configuracion,nombre',
+            'datos' => 'required|between:1,250',
+            'tipo' => 'required|integer|between:1,11',
         ]);
 
         Docente::create($data);
-        return redirect()->route('docente.index');
+        return redirect()->route('config.index');
     }
 
     /**
@@ -71,7 +75,7 @@ class ConfiguracionController extends Controller
      */
     public function show(Configuracion $configuracion)
     {
-        return view('docente.show',compact('docente'));
+        return view('config.show',compact('configuracion'));
     }
 
     /**
@@ -82,7 +86,7 @@ class ConfiguracionController extends Controller
      */
     public function edit(Configuracion $configuracion)
     {
-        return view('docente.edit',compact('docente'));
+        return view('config.edit',compact('configuracion'));
     }
 
     /**
@@ -95,16 +99,13 @@ class ConfiguracionController extends Controller
     public function update(Request $request, Configuracion $configuracion)
     {
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner,'.$docente->id,
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'nombre' => 'required|between:1,250|unique:configuracion,nombre,'.$configuracion->id,
+            'datos' => 'required|between:1,250',
+            'tipo' => 'required|integer|between:1,11',
         ]);
 
-        $docente->update($data);
-        return redirect()->route('docente.show',$docente);
+        $configuracion->update($data);
+        return redirect()->route('config.show',$configuracion);
     }
 
     /**
@@ -115,7 +116,8 @@ class ConfiguracionController extends Controller
      */
     public function destroy(Configuracion $configuracion)
     {
-        $docente->delete();
-        return redirect()->route('docente.index');
+        $configuracion->delete();
+        return redirect()->route('config.index');
     }
+
 }

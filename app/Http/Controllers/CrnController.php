@@ -19,7 +19,7 @@ class CrnController extends Controller
         $registros = $request->get('registros');
 
         if(!$registros) $registros = 15;
-            
+
         $cabeceras = Configuracion::where('nombre','NombreCamposTablaCrn')
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
