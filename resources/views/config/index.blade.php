@@ -73,7 +73,21 @@
                                 href="{{ route('config.edit', $configuracion) }}"><i class="fa fa-pencil"></i></a></td>
                             <td style="text-align: center">
                                 <a class="btn btn-default" data-toggle="modal" data-target="#myModal"
-                                @click='eliminarConfiguracion( {{ $configuracion->id }}, "{{ $configuracion->nombre }}" )'>
+                                @click='eliminarConfiguracion( {{ $configuracion->id }}, "{{ $configuracion->nombre }}","@switch($configuracion->tipo)
+                                @case(0) {{ "BloqueoDocentes" }} @break
+                                @case(1) {{ "BloqueoCRN" }} @break
+                                @case(2) {{ "BloqueoContraseña" }} @break
+                                @case(3) {{ "Contraseña" }} @break
+                                @case(4) {{ "Calendario" }} @break
+                                @case(5) {{ "Asueto" }} @break
+                                @case(6) {{ "NombredeCampos" }} @break
+                                @case(7) {{ "CamposdeTabla" }} @break
+                                @case(8) {{ "TamañodeCampos" }} @break
+                                @case(9) {{ "NombredeCamposFiltro" }} @break
+                                @case(10) {{ "CamposdeFiltro" }} @break
+                                @case(11) {{ "Limitederegistros" }} @break
+                                @default @break
+                            @endswitch" )'>
                                 <li class="fa fa-trash"></li></a>
                             </td>
                         </tr>
@@ -98,7 +112,7 @@
             </div>
             <div class="modal-body" >
                 Esta por eliminar la configuracion con los siguientes datos : <br>
-                ID : @{{ id }}, Nombre: @{{ nombreConfig }} <br>
+                Tipo de Configuracion : @{{ tipo }}, Nombre: @{{ nombreConfig }} <br>
                 Realmente, ¿Deseas aceptar esta accion?
             </div>
             <div class="modal-footer">
@@ -121,18 +135,20 @@
             el: '#frexal',
             data: {
                 id: 0,
+                tipo: "",
                 nombreConfig: "",
             },
             methods:{
-                eliminarConfiguracion: function (sId,sNombreConfig) {
+                eliminarConfiguracion: function (sId,sNombreConfig,sTipo) {
                     if(sId>0){
                         this.id = sId;
                         this.nombreConfig = sNombreConfig;
+                        this.tipo = sTipo;
                         crearUrl();
                     }
                 },
                 crearUrl: function(){
-                    return "http://localhost:8000/config/" + this.id + "/delete"
+                    return "http://localhost:8000/configuraciones/" + this.id + "/delete"
                 }
             }
         });

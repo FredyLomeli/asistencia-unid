@@ -77,7 +77,7 @@
                     Datos:</label>
                 <div class="col-lg-5">
                     <input type="text" maxlength="100" class="form-control" id="datos" name="datos"
-                    placeholder="fecha de asueto" value="{{ old('datos')}}" :disabled="ban === true">
+                    placeholder="configuracion" value="{{ old('datos')}}" :disabled="ban === true">
                     @if ($errors->has('datos'))
                     <span class="help-block">
                         <strong>{{ $errors->first('datos') }}</strong>
@@ -150,7 +150,7 @@
             <div class="row">
                 <div class="row">
                     <div class="col-xs-9 col-lg-7">
-                        <a class="btn btn-default pull-right" href="{{ route('docente.index') }}"><i class="fa fa-list"></i> Regresar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('config.index') }}"><i class="fa fa-list"></i> Regresar</a>
                     </div>
                     <div class="col-xs-3 col-lg-1">
                         <button type="submit" class="btn btn-default pull-right" :disabled="ban === true"><i class="fa fa-save"></i> Guardar</button>
