@@ -4,7 +4,7 @@
 
 @section('asunto',"Configuración")
 
-@section('descripcion', "Ver Detalle")
+@section('descripcion', "Ver detalle")
 
 @section('migajas')
 <li><a href="{{ route('inicio') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>

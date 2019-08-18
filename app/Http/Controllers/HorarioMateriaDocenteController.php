@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuracion;
 use App\HorarioMateriaDocente;
 use Illuminate\Http\Request;
 
@@ -18,18 +19,17 @@ class HorarioMateriaDocenteController extends Controller
         $registros = $request->get('registros');
 
         if(!$registros) $registros = 15;
-            
-        $cabeceras = Configuracion::where('nombre','NombreCamposTablaDocente')
+        $cabeceras = Configuracion::where('nombre','NombreCamposTablaMaterias')
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
-        $campos = Configuracion::where('nombre','CamposTablaDocente')
+        $campos = Configuracion::where('nombre','CamposTablaMaterias')
             ->where('tipo', 7)->value('datos');
         $campos = explode(',', $campos);
-        $docentes = Docente::select($campos)
+        $horarioMateriaDocente = HorarioMateriaDocente::select($campos)
         ->orderBy('id','DESC')
         ->busqueda($filtro)
         ->paginate($registros);
-        return view('docente.index',compact('docentes','campos','cabeceras','filtro','registros'));
+        return view('horaroDocente.index',compact('horarioMateriaDocente','campos','cabeceras','filtro','registros'));
     }
 
     /**
@@ -39,7 +39,7 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function create()
     {
-        return view('docente.create');
+        return view('horaroDocente.create');
     }
 
     /**
@@ -50,17 +50,23 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function store(Request $request)
     {
+        $data = request()->all();
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner',
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'crn' => 'required|between:5,8|exists:crn,crn',
+            'descripcion' => 'required|between:1,250',
+            'id_docente' => 'required|between:8,10|exists:docentes,id_banner',
+            'dia' => 'required|integer|between:1,7',
+            'fecha_vig_ini' => 'required|date_format:Y-m-d|before_or_equal:' . $data['fecha_vig_fin'],
+            'fecha_vig_fin' => 'required|date_format:Y-m-d',
+            'hora_ini' => 'required|date_format:H:i:s|before_or_equal:' . $data['hora_fin'],
+            'hora_fin' => 'required|date_format:H:i:s',
+            'grupo' => 'between:0,250',
+            'calendario' => 'between:0,200',
+            'comentario'=> 'between:0,500',
         ]);
 
-        Docente::create($data);
-        return redirect()->route('docente.index');
+        HorarioMateriaDocente::create($data);
+        return redirect()->route('horaroDocente.index');
     }
 
     /**
@@ -71,7 +77,7 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function show(HorarioMateriaDocente $horarioMateriaDocente)
     {
-        return view('docente.show',compact('docente'));
+        return view('horaroDocente.show',compact('horarioMateriaDocente'));
     }
 
     /**
@@ -82,7 +88,7 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function edit(HorarioMateriaDocente $horarioMateriaDocente)
     {
-        return view('docente.edit',compact('docente'));
+        return view('horaroDocente.edit',compact('horarioMateriaDocente'));
     }
 
     /**
@@ -94,17 +100,23 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function update(Request $request, HorarioMateriaDocente $horarioMateriaDocente)
     {
+        $data = request()->all();
         $data = request()->validate([
-            'id_banner' => 'required|between:8,10|unique:docentes,id_banner,'.$docente->id,
-            'nombre' => 'required|between:0,100',
-            'apellido_paterno' => 'required|between:0,100',
-            'apellido_materno' => 'between:0,100',
-            'estatus' => 'required',
-            'comentario' => 'between:0,500',
+            'crn' => 'required|between:5,8|exists:crn,crn',
+            'descripcion' => 'required|between:1,250',
+            'id_docente' => 'required|between:8,10|exists:docentes,id_banner',
+            'dia' => 'required|integer|between:1,7',
+            'fecha_vig_ini' => 'required|date_format:Y-m-d|before_or_equal:' . $data['fecha_vig_fin'],
+            'fecha_vig_fin' => 'required|date_format:Y-m-d',
+            'hora_ini' => 'required|date_format:H:i:s|before_or_equal:' . $data['hora_fin'],
+            'hora_fin' => 'required|date_format:H:i:s',
+            'grupo' => 'between:0,250',
+            'calendario' => 'between:0,200',
+            'comentario'=> 'between:0,500',
         ]);
 
-        $docente->update($data);
-        return redirect()->route('docente.show',$docente);
+        $horarioMateriaDocente->update($data);
+        return redirect()->route('horaroDocente.show',$horarioMateriaDocente);
     }
 
     /**
@@ -115,7 +127,7 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function destroy(HorarioMateriaDocente $horarioMateriaDocente)
     {
-        $docente->delete();
-        return redirect()->route('docente.index');
+        $horarioMateriaDocente->delete();
+        return redirect()->route('horaroDocente.index');
     }
 }

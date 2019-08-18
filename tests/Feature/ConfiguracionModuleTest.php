@@ -36,9 +36,36 @@ class ConfiguracionModuleTest extends TestCase
 
         $this->get(route('config.show',$config))
             ->assertStatus(200)
-            ->assertSee('Vista detalle')
+            ->assertSee('Ver detalle')
             ->assertSee($config->nombre)
             ->assertSee($config->datos);
+    }
+    /** @test */
+    public function it_loads_the_configuracion_tipo_asueto_view_details(){
+        $config = factory(Configuracion::class)->create([
+            'datos' => '30/01/2019',
+            'tipo' => '5',
+        ]);
+
+        $this->get(route('config.show',$config))
+            ->assertStatus(200)
+            ->assertSee('Ver detalle')
+            ->assertSee($config->nombre)
+            ->assertSee('30/01/2019');
+    }
+    /** @test */
+    public function it_loads_the_configuracion_tipo_calendario_view_details(){
+        $config = factory(Configuracion::class)->create([
+            'datos' => '30/01/2019 | 24/04/2019',
+            'tipo' => '5',
+        ]);
+
+        $this->get(route('config.show',$config))
+            ->assertStatus(200)
+            ->assertSee('Ver detalle')
+            ->assertSee($config->nombre)
+            ->assertSee('30/01/2019')
+            ->assertSee('24/04/2019');
     }
     /** @test */
     public function it_loads_the_configuracion_view_edit(){
@@ -49,6 +76,33 @@ class ConfiguracionModuleTest extends TestCase
             ->assertSee('Edición de registro')
             ->assertSee($config->nombre)
             ->assertSee($config->datos);
+    }
+    /** @test */
+    public function it_loads_the_configuracion_tipo_asueto_view_edit(){
+        $config = factory(Configuracion::class)->create([
+            'datos' => '30/01/2019',
+            'tipo' => '5',
+        ]);
+
+        $this->get(route('config.edit',$config))
+            ->assertStatus(200)
+            ->assertSee('Edición de registro')
+            ->assertSee($config->nombre)
+            ->assertSee('30/01/2019');
+    }
+    /** @test */
+    public function it_loads_the_configuracion_tipo_calendario_view_edit(){
+        $config = factory(Configuracion::class)->create([
+            'datos' => '30/01/2019 | 24/04/2019',
+            'tipo' => '4',
+        ]);
+
+        $this->get(route('config.edit',$config))
+            ->assertStatus(200)
+            ->assertSee('Edición de registro')
+            ->assertSee($config->nombre)
+            ->assertSee('30/01/2019')
+            ->assertSee('24/04/2019');
     }
     /** @test */
     function it_create_a_new_configuracion(){
@@ -64,6 +118,39 @@ class ConfiguracionModuleTest extends TestCase
             'nombre' => 'NombreDeLaConfiguracion',
             'datos' => 'Datos,De,La,Configuracion',
             'tipo' => '6',
+        ]);
+    }
+    /** @test */
+    function it_create_a_new_configuracion_tipo_auseto(){
+        $this->post(route('config.store'),[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'fecha' => '10/10/2019',
+            'tipo' => '5',
+            ])->assertRedirect(route('config.index'));
+        $this->get(route('config.index'))
+            ->assertSee('NombreDeLaConfiguracion');
+
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'datos' => '10/10/2019',
+            'tipo' => '5',
+        ]);
+    }
+    /** @test */
+    function it_create_a_new_configuracion_tipo_calendario(){
+        $this->post(route('config.store'),[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'fec_ini' => '01/01/2019',
+            'fec_fin' => '30/04/2019',
+            'tipo' => '4',
+            ])->assertRedirect(route('config.index'));
+        $this->get(route('config.index'))
+            ->assertSee('NombreDeLaConfiguracion');
+
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'datos' => '01/01/2019 | 30/04/2019',
+            'tipo' => '4',
         ]);
     }
     /** @test */
@@ -143,17 +230,100 @@ class ConfiguracionModuleTest extends TestCase
         $this->assertEquals(0,Configuracion::count());
     }
     /** @test */
-    function the_tipo_must_be_1_or_11_value_to_create(){
+    function the_tipo_must_be_0_and_11_value_to_create(){
         $this->from(route('config.create'))
             ->post(route('config.store'), [
                 'nombre' => 'NombreDeLaConfiguracion',
                 'datos' => 'Datos,De,La,Configuracion',
-                'tipo' => '0',
+                'tipo' => '12',
             ])
             ->assertRedirect(route('config.create'))
             ->assertSessionHasErrors('tipo');
         $this->assertEquals(0,Configuracion::count());
     }
+    /** @test */
+    function the_fecha_is_required_to_create_a_new_configuracion_tipo_auseto(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fecha' => '',
+                'tipo' => '5',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fecha');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fecha_need_format_d_m_Y_to_create_a_new_configuracion_tipo_auseto(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fecha' => '10/10/201',
+                'tipo' => '5',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fecha');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fec_ini_is_required_to_create_a_new_configuracion_tipo_calendario(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fec_ini_need_format_d_m_Y_to_create_a_new_configuracion_tipo_calendario(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/201',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fec_ini_before_than_fec_fin_to_create_a_new_configuracion_tipo_calendario(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/2020',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fec_fin_is_required_to_create_a_new_configuracion_tipo_calendario(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '30/04/2019',
+                'fec_fin' => '',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fec_fin');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
+    function the_fec_fin_need_format_d_m_Y_to_create_a_new_configuracion_tipo_calendario(){
+        $this->from(route('config.create'))
+            ->post(route('config.store'),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/2019',
+                'fec_fin' => '30/04/201',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.create'))
+            ->assertSessionHasErrors('fec_fin');
+        $this->assertEquals(0,Configuracion::count());
+    }
+    /** @test */
     function it_edit_a_configuracion(){
         // $this->withoutExceptionHandling();
         $config = factory(Configuracion::class)->create();
@@ -169,6 +339,37 @@ class ConfiguracionModuleTest extends TestCase
             'nombre' => 'NombreDeLaConfiguracion',
             'datos' => 'Datos,De,La,Configuracion',
             'tipo' => '6',
+        ]);
+    }
+    /** @test */
+    function it_edit_a_configuracion_tipo_auseto(){
+        $config = factory(Configuracion::class)->create();
+        $this->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fecha' => '30/04/2019',
+                'tipo' => '5',
+            ])->assertRedirect(route('config.show', $config));
+        $this->get(route('config.index'))
+            ->assertSee('NombreDeLaConfiguracion');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'datos' => '30/04/2019',
+            'tipo' => '5',
+        ]);
+    }
+    /** @test */
+    function it_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '01/01/2019',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.show', $config));
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => 'NombreDeLaConfiguracion',
+            'datos' => '01/01/2019 | 30/04/2019',
+            'tipo' => '4',
         ]);
     }
     /** @test */
@@ -281,16 +482,133 @@ class ConfiguracionModuleTest extends TestCase
         ]);
     }
     /** @test */
-    function the_tipo_must_be_1_or_11_value_to_edit(){
+    function the_tipo_must_be_0_or_11_value_to_edit(){
         $config = factory(Configuracion::class)->create();
         $this->from(route('config.edit', $config))
             ->put(route('config.update', $config), [
                 'nombre' => 'NombreDeLaConfiguracion',
                 'datos' => 'Datos,De,La,Configuracion',
-                'tipo' => '0',
+                'tipo' => '12',
             ])
             ->assertRedirect(route('config.edit', $config))
             ->assertSessionHasErrors('tipo');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fecha_is_required_to_edit_a_configuracion_tipo_auseto(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fecha' => '',
+                'tipo' => '5',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fecha');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fecha_need_format_d_m_Y_to_edit_a_configuracion_tipo_auseto(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fecha' => '10/10/201',
+                'tipo' => '5',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fecha');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fec_ini_is_required_to_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fec_ini_need_format_d_m_Y_to_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/201',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fec_ini_before_than_fec_fin_to_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/2020',
+                'fec_fin' => '30/04/2019',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fec_ini');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fec_fin_is_required_to_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '30/04/2019',
+                'fec_fin' => '',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fec_fin');
+        $this->assertDatabaseHas('configuracion',[
+            'nombre' => $config->nombre,
+            'datos' => $config->datos,
+            'tipo' => $config->tipo,
+        ]);
+    }
+    /** @test */
+    function the_fec_fin_need_format_d_m_Y_to_edit_a_configuracion_tipo_calendario(){
+        $config = factory(Configuracion::class)->create();
+        $this->from(route('config.edit', $config))
+            ->put(route('config.update', $config),[
+                'nombre' => 'NombreDeLaConfiguracion',
+                'fec_ini' => '10/10/2019',
+                'fec_fin' => '30/04/201',
+                'tipo' => '4',
+            ])->assertRedirect(route('config.edit', $config))
+            ->assertSessionHasErrors('fec_fin');
         $this->assertDatabaseHas('configuracion',[
             'nombre' => $config->nombre,
             'datos' => $config->datos,

@@ -66,11 +66,11 @@ Route::get('/horario/docente/nuevo', 'HorarioMateriaDocenteController@create')
     ->name('horarioDocente.create');
 Route::post('/horario/docente/crear', 'HorarioMateriaDocenteController@store')
     ->name('horarioDocente.store');
-Route::get('/horario/docente/{HorarioMateriaDocente}', 'HorarioMateriaDocenteController@show')
+Route::get('/horario/docente/{horarioMateriaDocente}', 'HorarioMateriaDocenteController@show')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.show');
-Route::get('/horario/docente/{HorarioMateriaDocente}/editar', 'HorarioMateriaDocenteController@edit')
+Route::get('/horario/docente/{horarioMateriaDocente}/editar', 'HorarioMateriaDocenteController@edit')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.edit');
-Route::put('/horario/docente/{HorarioMateriaDocente}/actualizar', 'HorarioMateriaDocenteController@update')
+Route::put('/horario/docente/{horarioMateriaDocente}/actualizar', 'HorarioMateriaDocenteController@update')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.update');
-Route::delete('/horario/docente/{HorarioMateriaDocente}/delete', 'HorarioMateriaDocenteController@destroy')
+Route::delete('/horario/docente/{horarioMateriaDocente}/delete', 'HorarioMateriaDocenteController@destroy')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.destroy');
