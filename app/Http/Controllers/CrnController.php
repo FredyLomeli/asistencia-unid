@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Crn;
 use App\Configuracion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CrnController extends Controller
 {
@@ -112,5 +113,19 @@ class CrnController extends Controller
     {
         $crn->delete();
         return redirect()->route('crn.index');
+    }
+
+    function autocomplete(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data = DB::select('select CONCAT(crn, \' - \',nombre) as materia from crn where CONCAT(crn, \' \',nombre) LIKE "%'.$query.'%" ');
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach ($data as $row) {
+                $output .= '<li class="mat"><a href="#">' . $row->materia . '</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

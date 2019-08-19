@@ -21,4 +21,11 @@ class HorarioMateriaDocente extends Model
         'calendario',
         'comentario',
     ];
+
+    public function scopeBusqueda($query, $busqueda){
+        if($busqueda)
+            return $query->where('crn','LIKE', "%$busqueda%")
+                ->orWhere('descripcion','LIKE', "%$busqueda%")
+                ->orWhere('id_docente','LIKE', "%$busqueda%");
+    }
 }

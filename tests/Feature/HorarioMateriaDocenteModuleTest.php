@@ -68,6 +68,17 @@ class HorarioMateriaDocenteModuleTest extends TestCase
     }
     /** @test */
     function it_create_a_new_horario(){
+        Configuracion::create([
+            'nombre' => 'NombreCamposTablaMaterias',
+            'datos' => 'CRN,DESCRIPCION,CALENDARIO,DIA,FECHA INICIO,FECHA FIN,HORA ENTRADA,HORA SALIDA,GRUPO,COMENTARIO,FECHA REGISTRO,No',
+            'tipo' => 6,
+        ]);
+        Configuracion::create([
+            'nombre' => 'CamposTablaMaterias',
+            'datos' => 'crn,descripcion,calendario,dia,fecha_vig_ini,fecha_vig_fin,hora_ini,hora_fin,grupo,comentario,fecha_registro,id',
+            'tipo' => 7,
+        ]);
+
         $docente = factory(Docente::class)->create();
         $crn = factory(Crn::class)->create();
         $this->post(route('horarioDocente.store'),[
@@ -310,7 +321,7 @@ class HorarioMateriaDocenteModuleTest extends TestCase
                 'crn' => $crn->crn,
                 'descripcion' => $crn->nombre,
                 'id_docente' => $docente->id_banner,
-                'dia' => '0',
+                'dia' => 7,
                 'fecha_vig_ini' => '1972-05-18',
                 'fecha_vig_fin' => '1973-05-18',
                 'hora_ini' => '08:08:35',
@@ -611,6 +622,17 @@ class HorarioMateriaDocenteModuleTest extends TestCase
     }
     /** @test */
     function it_edit_a_horario(){
+        Configuracion::create([
+            'nombre' => 'NombreCamposTablaMaterias',
+            'datos' => 'CRN,DESCRIPCION,CALENDARIO,DIA,FECHA INICIO,FECHA FIN,HORA ENTRADA,HORA SALIDA,GRUPO,COMENTARIO,FECHA REGISTRO,No',
+            'tipo' => 6,
+        ]);
+        Configuracion::create([
+            'nombre' => 'CamposTablaMaterias',
+            'datos' => 'crn,descripcion,calendario,dia,fecha_vig_ini,fecha_vig_fin,hora_ini,hora_fin,grupo,comentario,fecha_registro,id',
+            'tipo' => 7,
+        ]);
+
         $docente = factory(Docente::class)->create();
         $crn = factory(Crn::class)->create();
         $horario = factory(HorarioMateriaDocente::class)->create();
@@ -897,7 +919,7 @@ class HorarioMateriaDocenteModuleTest extends TestCase
                 'crn' => $crn->crn,
                 'descripcion' => $crn->nombre,
                 'id_docente' => $docente->id_banner,
-                'dia' => 0,
+                'dia' => 7,
                 'fecha_vig_ini' => '1972-05-18',
                 'fecha_vig_fin' => '1973-05-18',
                 'hora_ini' => '08:08:35',

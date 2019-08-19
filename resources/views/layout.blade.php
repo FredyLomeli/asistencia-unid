@@ -34,7 +34,6 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
-
         <header class="main-header">
             <!-- Logo -->
             <a href="{{ route('inicio') }}" class="logo">
@@ -71,7 +70,8 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ route('docente.index') }}"><i class="fa fa-circle-o"></i> Docentes </a></li>
                             <li><a href="{{ route('crn.index') }}"><i class="fa fa-circle-o"></i> Materias </a></li>
-                            <li><a href="{{ route('horarioDocente.index') }}"><i class="fa fa-circle-o"></i> Horarios </a></li>
+                            <li><a href="{{ route('horarioDocente.index') }}"><i class="fa fa-circle-o"></i> Horarios
+                                </a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Reportes </a></li>
                         </ul>
                     </li>
@@ -93,7 +93,6 @@
                             <i class="fa fa-cog"></i> <span>Configuracion</span>
                         </a>
                     </li>
-
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -111,14 +110,11 @@
                     @yield('migajas')
                 </ol>
             </section>
-
             <!-- Main content -->
-            <section class="content" >
-                <div id="frexal">
+            <section id="frexal" class="content">
                 {{--  inicio de contenido  --}}
                 @yield('contenido')
                 @yield('modals')
-                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -138,4 +134,5 @@
     <script src="{{ asset('adminlte/js/adminlte.min.js') }}"></script>
     @yield('scriptsheet')
 </body>
+
 </html>

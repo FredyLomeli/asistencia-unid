@@ -64,38 +64,38 @@ Sistema para el control de asistencia
 </div>
 <h2 class="page-header">Administrativos</h2>
 <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <a href="{{ route('inicio') }}">
-                <div class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="fa fa-users"></i></span>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ route('inicio') }}">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-users"></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-number">ADMINISTRATIVOS</span>
-                    </div>
+                <div class="info-box-content">
+                    <span class="info-box-number">ADMINISTRATIVOS</span>
                 </div>
-            </a>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <a href="{{ route('inicio') }}">
-                <div class="info-box bg-yellow">
-                    <span class="info-box-icon"><i class="fa fa-calendar-check-o"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-number">HORARIOS</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <a href="{{ route('inicio') }}">
-                <div class="info-box bg-red">
-                    <span class="info-box-icon"><i class="fa fa-bar-chart"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-number">REPORTES</span>
-                    </div>
-                </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ route('inicio') }}">
+            <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="fa fa-calendar-check-o"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-number">HORARIOS</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ route('inicio') }}">
+            <div class="info-box bg-red">
+                <span class="info-box-icon"><i class="fa fa-bar-chart"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-number">REPORTES</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
 @endsection

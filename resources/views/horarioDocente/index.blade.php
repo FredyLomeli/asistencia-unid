@@ -4,7 +4,7 @@
 
 @section('asunto',"Horario Docente")
 
-@section('descripcion', "Listado de Horarios")
+@section('descripcion', "Listado de horarios")
 
 @section('migajas')
 <li><a href="{{ route('inicio') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -49,16 +49,25 @@
                         @foreach ($horarioMateriaDocente as $horario)
                         <tr>
                             @foreach($campos as $campo)
-                                @if($campo === "estatus")
-                                <td style="text-align: center">{{ $horario[$campo] === 1 ? 'Activo' : 'Inactivo'}}</td>
+                                @if($campo === "dia")
+                                <td style="text-align: center">@switch($horario[$campo])
+                                    @case(0) {{ "Domingo" }} @break
+                                    @case(1) {{ "Lunes" }} @break
+                                    @case(2) {{ "Martes" }} @break
+                                    @case(3) {{ "Miercoles" }} @break
+                                    @case(4) {{ "Jueves" }} @break
+                                    @case(5) {{ "Viernes" }} @break
+                                    @case(6) {{ "Sabado" }} @break
+                                    @default @break
+                                @endswitch</td>
                                 @elseif($campo === "comentario")
                                 <td style="text-align: center">{{ Str::limit($horario[$campo],30) }}</td>
                                 @elseif ($campo != "id")
                                 <td style="text-align: center">{{ $horario[$campo] }}</td>
                                 @endif
                             @endforeach
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.show', $horario) }}"><i class="fa fa-eye"></i></a></td>
-                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('docente.edit', $horario) }}"><i class="fa fa-pencil"></i></a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('horarioDocente.show', $horario) }}"><i class="fa fa-eye"></i></a></td>
+                            <td style="text-align: center"><a class="btn btn-default" href="{{ route('horarioDocente.edit', $horario) }}"><i class="fa fa-pencil"></i></a></td>
                             <td style="text-align: center">
                                 <a class="btn btn-default" data-toggle="modal" data-target="#myModal"
                                 @click='eliminarDocente( {{ $horario->id }}, "{{ $horario->crn }} {{ $horario->descripcion }}","{{ $horario->id_docente }}" )'>
@@ -69,7 +78,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    {!! $horarioMateriaDocente->links('docente.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
+                    {!! $horarioMateriaDocente->links('horarioDocente.pagination',['filtro' => $filtro, 'registros' => $registros]) !!}
                 </div>
             </div>
         </div>

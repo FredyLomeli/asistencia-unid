@@ -29,6 +29,7 @@ Route::put('/docentes/{docente}/actualizar', 'DocenteController@update')
     ->where('docente', '[0-9]+')->name('docente.update');
 Route::delete('/docentes/{docente}/delete', 'DocenteController@destroy')
     ->where('docente', '[0-9]+')->name('docente.destroy');
+Route::post('/docentes/autocomplete', 'docenteController@autocomplete')->name('docente.autocomplete');
 
 Route::get('/configuraciones', 'ConfiguracionController@index')
     ->name('config.index');
@@ -59,6 +60,7 @@ Route::put('/materias/{crn}/actualizar', 'CrnController@update')
     ->where('crn', '[0-9]+')->name('crn.update');
 Route::delete('/materias/{crn}/delete', 'CrnController@destroy')
     ->where('crn', '[0-9]+')->name('crn.destroy');
+Route::post('/materias/autocomplete', 'CrnController@autocomplete')->name('crn.autocomplete');
 
 Route::get('/horario/docente', 'HorarioMateriaDocenteController@index')
     ->name('horarioDocente.index');
