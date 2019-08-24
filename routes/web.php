@@ -76,3 +76,8 @@ Route::put('/horario/docente/{horarioMateriaDocente}/actualizar', 'HorarioMateri
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.update');
 Route::delete('/horario/docente/{horarioMateriaDocente}/delete', 'HorarioMateriaDocenteController@destroy')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.destroy');
+
+    //Test generar variable multidimencional
+Route::get('/reporte', 'RegistroDocenteController@index')->name('reporteDocente.index');
+
+Route::get('/reporte/docente', 'ReportesController@indexDocente')->name('reporteDocente.indexDocente');

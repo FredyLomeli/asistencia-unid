@@ -47,19 +47,19 @@
                             @case(10) {{ "CamposdeFiltro" }} @break
                             @case(11) {{ "Limitederegistros" }} @break
                             @default @break
-                        @endswitch" disabled>
+                        @endswitch" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label"> Nombre:</label>
                         <div class="col-lg-5">
-                            <input type="text" class="form-control" value="{{ $configuracion->nombre}}" disabled>
+                            <input type="text" class="form-control" value="{{ $configuracion->nombre}}" readonly>
                         </div>
                     </div>
                     <div class="form-group" v-if="(tipo != 5 && tipo !=4) || tipo == 0">
                         <label class="col-lg-3 control-label"> Datos:</label>
                         <div class="col-lg-5">
-                            <input type="text" class="form-control" value="{{ $configuracion->datos}}" disabled>
+                            <input type="text" class="form-control" value="{{ $configuracion->datos}}" readonly>
                         </div>
                     </div>
                     <div class="form-group" v-if="tipo == 4 || tipo == 0">
@@ -67,7 +67,7 @@
                         <div class="col-lg-5">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" class="form-control" value="{{ $configuracion->fec_ini }}" disabled>
+                                <input type="text" class="form-control" value="{{ $configuracion->fec_ini }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                         <div class="col-lg-5">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" class="form-control" value="{{ $configuracion->fec_fin }}" disabled>
+                                <input type="text" class="form-control" value="{{ $configuracion->fec_fin }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         <div class="col-lg-5">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" class="form-control" value="{{ $configuracion->fecha }}" disabled>
+                                <input type="text" class="form-control" value="{{ $configuracion->fecha }}" readonly>
                             </div>
                         </div>
                     </div>

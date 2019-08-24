@@ -38,34 +38,34 @@ Vista detalle
                         <label for="id_banner" class="col-lg-3 control-label">ID:</label>
                         <div class="col-lg-3">
                             <input type="text" class="form-control" id="id_banner" name="id_banner"
-                                placeholder="ID DOCENTE" value="{{ $docente->id_banner }}" disabled>
+                                placeholder="ID DOCENTE" value="{{ $docente->id_banner }}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="nombre" class="col-lg-3 control-label">Nombre(s)</label>
                         <div class="col-lg-5">
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="JOSE"
-                                value="{{ $docente->nombre }}" disabled>
+                                value="{{ $docente->nombre }}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="apellido_paterno" class="col-lg-3 control-label">Apellido Paterno</label>
                         <div class="col-lg-5">
                             <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno"
-                                placeholder="PEREZ" value="{{ $docente->apellido_paterno }}" disabled>
+                                placeholder="PEREZ" value="{{ $docente->apellido_paterno }}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="apellido_materno" class="col-lg-3 control-label">Apellido Materno</label>
                         <div class="col-lg-5">
                             <input type="text" class="form-control" id="apellido_materno" name="apellido_materno"
-                                placeholder="LOPEZ" value="{{ $docente->apellido_materno }}" disabled>
+                                placeholder="LOPEZ" value="{{ $docente->apellido_materno }}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="estatus" class="col-lg-3 control-label">Estado</label>
                         <div class="col-lg-5">
-                            <select class="form-control" id="estatus" name="estatus" disabled>
+                            <select class="form-control" id="estatus" name="estatus" readonly>
                                 <option>{{ $docente->estatus === 1 ? 'Activo' : 'Inactivo' }}</option>
                             </select>
                         </div>
@@ -74,14 +74,14 @@ Vista detalle
                         <label for="fecha_registro" class="col-lg-3 control-label">Fecha registro</label>
                         <div class="col-lg-5">
                             <input type="text" class="form-control" id="fecha_registro" name="fecha_registro"
-                                value="{{ $docente->fecha_registro }}" disabled>
+                                value="{{ $docente->fecha_registro }}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="comentario" class="col-lg-3 control-label">Comentarios</label>
                         <div class="col-lg-5">
                             <textarea type="text" class="form-control" id="comentario" name="comentario"
-                                disabled>{{ $docente->comentario }}</textarea>
+                                readonly>{{ $docente->comentario }}</textarea>
                         </div>
                     </div>
                     <div class="box-footer">

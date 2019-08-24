@@ -84,7 +84,7 @@
                             @endif
                             Datos:</label>
                         <div class="col-lg-5">
-                            <input type="text" maxlength="100" class="form-control" id="datos" name="datos"
+                            <input type="text" maxlength="250" class="form-control" id="datos" name="datos"
                                 placeholder="configuracion" value="{{ old('datos')}}" :disabled="ban === true">
                             @if ($errors->has('datos'))
                             <span class="help-block">

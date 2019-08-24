@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Configuracion;
 use App\HorarioMateriaDocente;
 use Illuminate\Http\Request;
+
 
 class HorarioMateriaDocenteController extends Controller
 {
@@ -19,14 +21,13 @@ class HorarioMateriaDocenteController extends Controller
         $registros = $request->get('registros');
 
         if(!$registros) $registros = 15;
-        $cabeceras = Configuracion::where('nombre','NombreCamposTablaMaterias')
+        $cabeceras = Configuracion::where('nombre',)
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
         $campos = Configuracion::where('nombre','CamposTablaMaterias')
             ->where('tipo', 7)->value('datos');
         $campos = explode(',', $campos);
-        $horarioMateriaDocente = HorarioMateriaDocente::select($campos)
-        ->orderBy('id','DESC')
+        $horarioMateriaDocente = HorarioMateriaDocente::orderBy('id','DESC')
         ->busqueda($filtro)
         ->paginate($registros);
         return view('horarioDocente.index',compact('horarioMateriaDocente','campos','cabeceras','filtro','registros'));
@@ -39,7 +40,12 @@ class HorarioMateriaDocenteController extends Controller
      */
     public function create()
     {
-        return view('horaroDocente.create');
+        $calendarios = Configuracion::orderBy('id','DESC')->where('tipo',4)->get();
+        $calendarioActual = $calendarios->first();
+        $fechas = explode(' | ', $calendarioActual->datos);
+        $calendarioActual->fechaInicio = Carbon::createFromFormat('d/m/Y', $fechas[0])->format('Y-m-d');
+        $calendarioActual->fechaFin = Carbon::createFromFormat('d/m/Y', $fechas[1])->format('Y-m-d');
+        return view('horarioDocente.create',compact('calendarios', 'calendarioActual'));
     }
 
     /**
@@ -64,6 +70,8 @@ class HorarioMateriaDocenteController extends Controller
             'calendario' => 'between:0,200',
             'comentario'=> 'between:0,500',
         ]);
+        $arrayCalendar = explode('|', $data['calendario']);
+        $data['calendario'] = $arrayCalendar[0];
 
         HorarioMateriaDocente::create($data);
         return redirect()->route('horarioDocente.index');

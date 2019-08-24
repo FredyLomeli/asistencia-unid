@@ -40,7 +40,11 @@ class HorarioMateriaDocenteModuleTest extends TestCase
     }
     /** @test */
     public function it_loads_the_horario_view_create(){
-        $horario = factory(HorarioMateriaDocente::class)->create();
+        Configuracion::create([
+            'nombre' => '201920',
+            'datos' => '04/03/2019 | 31/03/2019',
+            'tipo' => '4'
+        ]);
 
         $this->get(route('horarioDocente.create'))
             ->assertStatus(200)
@@ -52,7 +56,7 @@ class HorarioMateriaDocenteModuleTest extends TestCase
 
         $this->get(route('horarioDocente.show',$horario))
             ->assertStatus(200)
-            ->assertSee('Vista detalle')
+            ->assertSee('Ver detalle')
             ->assertSee($horario->descripcion)
             ->assertSee($horario->id_docente);
     }

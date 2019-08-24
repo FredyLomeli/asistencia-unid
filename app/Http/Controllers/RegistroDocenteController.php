@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\RegistroDocente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RegistroDocenteController extends Controller
 {
@@ -14,7 +15,17 @@ class RegistroDocenteController extends Controller
      */
     public function index()
     {
-        //
+        $docente1 = DB::select('select * from docentes where nombre LIKE "%alf%" ');
+        $docente2 = DB::select('select * from docentes where nombre LIKE "%gui%" ');
+        $docente3 = DB::select('select * from docentes where nombre LIKE "%mar%" ');
+        // $docente1 = Docente::where('nombre', 'LIKE', '%alf%');
+        // $docente2 = Docente::where('nombre', 'LIKE', '%gui%');
+        // $docente3 = Docente::where('nombre', 'LIKE', '%mar%');
+        $docentes['docente1'] = $docente1;
+        $docentes['docente2'] = $docente2;
+        $docentes['docente3'] = $docente3;
+
+        dd($docentes);
     }
 
     /**
