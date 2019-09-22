@@ -77,7 +77,15 @@ Route::put('/horario/docente/{horarioMateriaDocente}/actualizar', 'HorarioMateri
 Route::delete('/horario/docente/{horarioMateriaDocente}/delete', 'HorarioMateriaDocenteController@destroy')
     ->where('HorarioMateriaDocente', '[0-9]+')->name('horarioDocente.destroy');
 
-    //Test generar variable multidimencional
-Route::get('/reporte', 'RegistroDocenteController@index')->name('reporteDocente.index');
+Route::get('/reporte/docente', 'ReportesController@indexDocente')->name('reporteDocente.index');
+Route::post('/reporte/docente', 'ReportesController@generarReporteDocente')->name('reporteDocente.generar');
 
-Route::get('/reporte/docente', 'ReportesController@indexDocente')->name('reporteDocente.indexDocente');
+
+//Test generar variable multidimencional
+Route::get('/reporte', 'RegistroDocenteController@index')->name('testReporteDocente.index');
+// Test PDF VIEW
+Route::get('/reporte/view', 'ReportesController@view')->name('reporte.views');
+// Test PDF VIEW
+Route::get('/reporte/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'ReportesController@viewPdf')
+    ->name('reporte.view');
+

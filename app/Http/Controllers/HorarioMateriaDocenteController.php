@@ -21,7 +21,7 @@ class HorarioMateriaDocenteController extends Controller
         $registros = $request->get('registros');
 
         if(!$registros) $registros = 15;
-        $cabeceras = Configuracion::where('nombre',)
+        $cabeceras = Configuracion::where('nombre','NombreCamposTablaMaterias')
             ->where('tipo', 6)->value('datos');
         $cabeceras = explode(',', $cabeceras);
         $campos = Configuracion::where('nombre','CamposTablaMaterias')

@@ -51,7 +51,7 @@ Sistema para el control de asistencia
         </a>
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <a href="{{ route('inicio') }}">
+        <a href="{{ route('reporteDocente.index') }}">
             <div class="info-box bg-red">
                 <span class="info-box-icon"><i class="fa fa-bar-chart"></i></span>
 

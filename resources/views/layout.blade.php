@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
+    @yield('stylos')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -30,8 +31,9 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 {{--  La clase del body permite personalizar el color de la interfaz  --}}
-
+@section('body')
 <body class="hold-transition skin-blue sidebar-mini">
+@show
     <!-- Site wrapper -->
     <div class="wrapper">
         <header class="main-header">
@@ -72,7 +74,7 @@
                             <li><a href="{{ route('crn.index') }}"><i class="fa fa-circle-o"></i> Materias </a></li>
                             <li><a href="{{ route('horarioDocente.index') }}"><i class="fa fa-circle-o"></i> Horarios
                                 </a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Reportes </a></li>
+                            <li><a href="{{ route('reporteDocente.index') }}"><i class="fa fa-circle-o"></i> Reportes </a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -101,6 +103,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
+                @section('header')
                 <h1>
                     @yield('asunto')
                     <small>@yield('descripcion')</small>
@@ -109,6 +112,7 @@
                     {{--  inicio de contenido  --}}
                     @yield('migajas')
                 </ol>
+                @show
             </section>
             <!-- Main content -->
             <section id="frexal" class="content">
