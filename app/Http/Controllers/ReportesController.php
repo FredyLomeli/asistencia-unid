@@ -76,22 +76,22 @@ class ReportesController extends Controller
         $excel = null;
         switch ($tipo) {
             case 0:
-                $excel = $CReport->generarReporteChecadas('pdf.checadas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
+                $excel =$CReport->generarReporteChecadas('excel.checadas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
                 break;
             case 1:
-                $excel = $CReport->generarReporteHoras('pdf.horas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
+                $excel =$CReport->generarReporteHoras('excel.horas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
                 break;
             case 2:
-                $excel = $CReport->generarReporteChecadas('pdf.checadas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
+                $excel =$CReport->generarReporteChecadas('excel.checadas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
                 break;
             case 3:
-                $excel = $CReport->generarReporteHoras('pdf.horas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
+                $excel =$CReport->generarReporteHoras('excel.horas-list',$fecha_inicial,$fecha_final,$id_docentes,2);
                 break;
             default:
                 # code...
                 break;
         }
-        $excel->download('xlsx');
+        return $excel->download('reporte.xlsx');
     }
 
 

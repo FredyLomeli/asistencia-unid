@@ -99,7 +99,7 @@ class ReportClass
     }
 
     public function generarExcel($vista,$config,$docentes,$registros){
-        return \Excel::download(new ChecadasExport($config,$docentes,$registros), 'reporte.xlsx');
+        return (new ChecadasExport($vista,$config,$docentes,$registros));
     }
 
     public function generarConsultaEntradaSalida($id_docente,$fecha_inicio,$fecha_fin){
