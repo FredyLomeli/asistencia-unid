@@ -46,7 +46,7 @@
                 <tbody>
                 <tr>
                     <td rowspan="3" style="text-align: center;">
-                        <img src="{{ $_SERVER["DOCUMENT_ROOT"].'/img/logo_unid.png' }}" width="170" height="100">
+                        <img src="{{ $_SERVER["DOCUMENT_ROOT"].'/img/logo_unid.png' }}" width="170" height="80">
                     </td>
                     <td colspan="4" class="text-center">Universidad Interamericana para el Desarrollo</td>
                 </tr>
@@ -73,19 +73,36 @@
                     <tr>
                         <th class="text-center">Fecha y hora</th>
                         <th class="text-center">CRN</th>
+                        <th class="text-center">Dia</th>
                         <th class="text-center">Materia</th>
                         <th class="text-center">Tipo</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @if (!empty($registros[$docente->id_banner]))
                     @foreach ($registros[$docente->id_banner] as $registro)
                     <tr>
                         <td class="text-center">{{ $registro->fecha_hora_reg }}</td>
                         <td class="text-center">{{ $registro->crn }}</td>
-                        <td class="text-center">{{ $registro->crn_descripcion }}</td>
+                        <td class="text-center">@switch($registro->dia)
+                            @case(0)Domingo @break
+                            @case(1)Lunes @break
+                            @case(2)Martes @break
+                            @case(3)Miercoles @break
+                            @case(4)Jueves @break
+                            @case(5)Viernes @break
+                            @case(6)Sabado @break
+                            @default
+                        @endswitch</td>
+                        <td class="text-center">{{ Str::limit($registro->crn_descripcion,25) }}</td>
                         <td class="text-center">{{ $registro->tipo_registro }}</td>
                     </tr>
                     @endforeach
+                    @else
+                    <tr>
+                        <td colspan="5" class="text-center">No se encontraron registros para este docente.</td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
             <br>

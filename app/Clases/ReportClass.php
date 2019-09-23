@@ -2,6 +2,7 @@
 
 use App\Docente;
 use App\RegistroDocente;
+use App\Exports\ChecadasExport;
 use Illuminate\Support\Facades\DB;
 
 class ReportClass
@@ -52,7 +53,7 @@ class ReportClass
         return trim($idConcatenados);
     }
 
-    public function generarReporteChecadas($view, $fecha_inicio, $fecha_fin, $id_docentes){
+    public function generarReporteChecadas($view, $fecha_inicio, $fecha_fin, $id_docentes,$ban){
         $config['tipo'] = "Checadas";
         $config['fecha_inicial'] = $fecha_inicio;
         $config['fecha_final'] = $fecha_fin;
@@ -62,10 +63,14 @@ class ReportClass
             $registro = DB::select("SELECT * FROM registro_docente WHERE docente_banner = {$id_docente} AND fecha_hora_reg >= '{$fecha_inicio} 00:00:00' AND fecha_hora_reg <= '{$fecha_fin} 23:59:59'");
             $registros[$id_docente] = $registro;
         }
-        return $this->generarPDF($view,$config,$docentes,$registros);
+        if($ban === 1)
+            return $this->generarPDF($view,$config,$docentes,$registros);
+        elseif($ban === 2)
+            return $this->generarExcel($view,$config,$docentes,$registros);
+
     }
 
-    public function generarReporteHoras($view, $fecha_inicio, $fecha_fin, $id_docentes){
+    public function generarReporteHoras($view, $fecha_inicio, $fecha_fin, $id_docentes,$ban){
         $config['tipo'] = "Horas Trabajadas";
         $config['fecha_inicial'] = $fecha_inicio;
         $config['fecha_final'] = $fecha_fin;
@@ -81,13 +86,20 @@ class ReportClass
             $docentes[$i]->horas_trabajadas = $registro[0]->trabajado;
             $i++;
         }
-        return $this->generarPDF($view,$config,$docentes,$registros);
+        if($ban === 1)
+            return $this->generarPDF($view,$config,$docentes,$registros);
+        elseif($ban === 2)
+            return $this->generarExcel($view,$config,$docentes,$registros);
     }
 
     public function generarPDF($vista,$config,$docentes,$registros){
         $pdf = \PDF::loadview($vista,compact('config','docentes','registros'));
         return $pdf;
 
+    }
+
+    public function generarExcel($vista,$config,$docentes,$registros){
+        return \Excel::download(new ChecadasExport($config,$docentes,$registros), 'reporte.xlsx');
     }
 
     public function generarConsultaEntradaSalida($id_docente,$fecha_inicio,$fecha_fin){

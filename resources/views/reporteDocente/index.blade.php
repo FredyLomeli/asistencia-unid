@@ -37,7 +37,12 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-2">
+                            <div class="checkbox">
+                                <label for="hoja"><input id="hoja" name="hoja" type="checkbox" value="-list" checked>Docente por hoja</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
                             <button type="submit" class="btn btn-default pull-right"><i class="fa fa-bar-chart"></i>
                                 Generar Reporte</button>
                         </div>

@@ -10,8 +10,13 @@
     <div class="box-header with-border">
     <h3 class="box-title">Datos de generacion del reporte</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-            </button>
+            <a href="{{ route('reporte.download' ,[
+                'tipo' => $data['tipo'],
+                'fecha_inicial' => $data['fecha_inicial'],
+                'fecha_final' => $data['fecha_final'],
+                'id_docentes' => $data['id_docentes_total'],
+            ]) }}"><img src="{{ asset('/img/excel.png') }}" width="20" height="20"></a>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
         </div>
     </div>
     <div class="box-body">

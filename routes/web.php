@@ -86,6 +86,10 @@ Route::get('/reporte', 'RegistroDocenteController@index')->name('testReporteDoce
 // Test PDF VIEW
 Route::get('/reporte/view', 'ReportesController@view')->name('reporte.views');
 // Test PDF VIEW
-Route::get('/reporte/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'ReportesController@viewPdf')
+Route::get('/reporte/pdf/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'ReportesController@viewPdf')
     ->name('reporte.view');
+
+// Test Excel Download
+Route::get('/reporte/excel/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'ReportesController@downloadExcel')
+->name('reporte.download');
 
