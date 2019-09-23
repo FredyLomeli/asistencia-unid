@@ -69,7 +69,7 @@
                         @case(6)Sabado @break
                         @default
                     @endswitch</td>
-                    <td class="text-center">{{ Str::limit($registro->crn_descripcion,25) }}</td>
+                    <td class="text-center">{{ $registro->crn_descripcion }}</td>
                     <td class="text-center">{{ $registro->tipo_registro }}</td>
                 </tr>
                 @endforeach
