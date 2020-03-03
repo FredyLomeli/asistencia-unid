@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('index');
 })->name('inicio');
 
+Route::get('/login', function(){
+    return view('layout.login');
+})->name('login');
+
+Route::get('/promo', function(){
+    return view('promocion.dashboard');
+})->name('login');
+
 Route::get('/docentes', 'DocenteController@index')
     ->name('docente.index');
 Route::get('/docentes/nuevo', 'DocenteController@create')
