@@ -15,6 +15,7 @@ class CreateEmpresasTable extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->string('nombre');
             $table->string('razon_social');
             $table->string('rfc',13)->nullable();
@@ -33,6 +34,7 @@ class CreateEmpresasTable extends Migration
             $table->string('municipio')->nullable();
             $table->string('codigo_postal',10)->nullable();
             $table->string('estado')->nullable();
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

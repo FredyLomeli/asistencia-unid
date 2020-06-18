@@ -15,14 +15,13 @@ class CreateConfiguracionesTable extends Migration
     {
         Schema::create('configuraciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            //Adicionales
+            $table->bigInteger('users_id');
+            $table->string('config');
+            $table->string('value');
+            $table->string('user_edit')->nullable();
             $table->text('comentario', '500')->nullable();
-            $table->string('adicional1')->nullable();
-            $table->string('adicional2')->nullable();
-            $table->string('adicional3')->nullable();
-            $table->string('adicional4')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -19,8 +19,8 @@ class CreateInscritosTable extends Migration
             $table->bigInteger('users_id');
             $table->bigInteger('empresas_id')->default(0);
             $table->bigInteger('escuelas_id')->default(0);
-            $table->integer('beca');
-            $table->integer('descuento');
+            $table->integer('beca')->default(0);
+            $table->integer('descuento')->default(0);
             $table->bigInteger('lineas_negocio_id');
             $table->bigInteger('programas_id');
             $table->bigInteger('periodos_id');
@@ -28,12 +28,13 @@ class CreateInscritosTable extends Migration
             $table->double('inscripcion');
             $table->double('mensualidad');
             $table->string('tarjeta_digitos',4);
-            $table->tinyInteger('estado');
+            $table->tinyInteger('estado')->default(1);
             $table->integer('beca_banner')->default(0);
             $table->integer('descuento_banner')->default(0);
             $table->integer('beca_dev')->default(0);
             $table->integer('descuento_dev')->default(0);
             $table->tinyInteger('motivo_beca')->default(0);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

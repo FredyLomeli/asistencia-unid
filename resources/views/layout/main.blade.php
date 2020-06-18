@@ -31,12 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li>
+            @yield('acciones')
         </ul>
 
         <!-- SEARCH FORM NO EN USO POR AHORA
@@ -237,7 +232,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Main content -->
         <div class="content">
+            <div class="container-fluid">
             @yield('contenido')
+            </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->
     </div>

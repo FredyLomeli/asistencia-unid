@@ -23,8 +23,9 @@ class CreateToquesPromocionsTable extends Migration
             $table->integer('fichas');
             $table->integer('avanzados');
             $table->integer('inscritos');
-            $table->tinyInteger('comision');
+            $table->tinyInteger('comision')->default(1);
             $table->tinyInteger('estado')->default(1);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

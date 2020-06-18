@@ -1,23 +1,20 @@
 @extends('layout.main')
 
-@section('title',"Control de asistencia")
+@section('title',"Listado de Usuarios")
 
 @section('descripcion')
-Prueba de dashboard promocion
+Listado de Usuarios
 @endsection
 
 @section('acciones')
 <li class="nav-item d-none d-sm-inline-block">
-    <a href="index3.html" class="nav-link">Inicios</a>
-</li>
-<li class="nav-item d-none d-sm-inline-block">
-    <a href="#" class="nav-link">Contactos</a>
+    <a href="index3.html" class="nav-link">Nuevo</a>
 </li>
 @endsection
 
 @section('migajas')
-<li class="breadcrumb-item"><a href="#">DashBoard</a></li>
-<li class="breadcrumb-item active">PromoTest</li>
+<li class="breadcrumb-item"><a href="{{ route('usuarios') }}">Usuarios</a></li>
+<li class="breadcrumb-item active">Crear</li>
 @endsection
 
 @section('contenido')

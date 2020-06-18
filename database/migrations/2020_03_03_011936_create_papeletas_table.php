@@ -20,6 +20,7 @@ class CreatePapeletasTable extends Migration
             $table->bigInteger('toques_promo_id')->default(0);
             $table->bigInteger('lineas_negocio_id');
             $table->integer('cantidad');
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

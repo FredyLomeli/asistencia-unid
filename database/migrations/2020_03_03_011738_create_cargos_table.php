@@ -15,8 +15,10 @@ class CreateCargosTable extends Migration
     {
         Schema::create('cargos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->string('descripcion');
             $table->text('permisos_default', '500')->nullable();
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

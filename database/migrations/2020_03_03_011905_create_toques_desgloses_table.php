@@ -15,10 +15,12 @@ class CreateToquesDesglosesTable extends Migration
     {
         Schema::create('toques_desgloses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->bigInteger('toques_promo_id');
             $table->bigInteger('lineas_negocio_id');
             $table->integer('cantidad');
             $table->tinyInteger('tipo_movimiento');
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

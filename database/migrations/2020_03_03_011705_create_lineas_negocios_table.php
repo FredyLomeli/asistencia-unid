@@ -15,8 +15,10 @@ class CreateLineasNegociosTable extends Migration
     {
         Schema::create('lineas_negocios', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->string('descripcion');
             $table->string('abreviatura',5);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

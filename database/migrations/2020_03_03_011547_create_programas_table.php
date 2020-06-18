@@ -15,9 +15,11 @@ class CreateProgramasTable extends Migration
     {
         Schema::create('programas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->bigInteger('lineas_negocio_id');
             $table->string('descripcion');
-            $table->string('abreviatura',100);
+            $table->string('abreviatura',10);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

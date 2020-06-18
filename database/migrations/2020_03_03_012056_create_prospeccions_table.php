@@ -15,6 +15,8 @@ class CreateProspeccionsTable extends Migration
     {
         Schema::create('prospeccions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

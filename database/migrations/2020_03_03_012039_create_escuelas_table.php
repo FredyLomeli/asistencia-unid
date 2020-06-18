@@ -15,9 +15,10 @@ class CreateEscuelasTable extends Migration
     {
         Schema::create('escuelas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->string('nombre');
-            $table->string('clave_cct')->nullable();
-            $table->string('tipificacion_promo')->nullable();
+            $table->string('clave_cct',20)->nullable();
+            $table->string('tipificacion_promo',3)->nullable();
             $table->string('contacto')->nullable();
             $table->string('celular',50)->nullable();
             $table->string('telefono',50)->nullable();
@@ -30,6 +31,7 @@ class CreateEscuelasTable extends Migration
             $table->string('municipio')->nullable();
             $table->string('codigo_postal',10)->nullable();
             $table->string('estado')->nullable();
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

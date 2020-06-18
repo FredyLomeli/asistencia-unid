@@ -18,6 +18,7 @@ class CreateMetasPromotoresTable extends Migration
             $table->bigInteger('users_id');
             $table->bigInteger('periodos_id');
             $table->integer('catidad');
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

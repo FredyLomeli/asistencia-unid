@@ -20,6 +20,7 @@ class CreateCapturaPapeletasTable extends Migration
             $table->bigInteger('escuelas_id')->default(0);
             $table->bigInteger('empresas_id')->default(0);
             $table->integer('cantidad');
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

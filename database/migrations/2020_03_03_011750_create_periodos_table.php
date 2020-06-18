@@ -15,6 +15,7 @@ class CreatePeriodosTable extends Migration
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->string('descripcion',50);
             $table->string('periodo',10);
             $table->integer('meta_general');
@@ -27,6 +28,7 @@ class CreatePeriodosTable extends Migration
             $table->double('costo_mensualidad_mae');
             $table->double('costo_mensualidad_mae_edu');
             $table->tinyInteger('estado')->default(1);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();

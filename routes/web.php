@@ -21,7 +21,7 @@ Route::get('/login', function(){
 
 Route::get('/promo', function(){
     return view('promocion.dashboard');
-})->name('login');
+})->name('promo');
 
 Route::get('/docentes', 'DocenteController@index')
     ->name('docente.index');
@@ -101,3 +101,7 @@ Route::get('/reporte/pdf/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'R
 Route::get('/reporte/excel/{tipo}/{fecha_inicial}/{fecha_final}/{id_docentes}', 'ReportesController@downloadExcel')
 ->name('reporte.download');
 
+
+// Usuarios
+Route::get('/usuarios/crear', 'UserController@create')->name('usuarios.crear');
+Route::get('/usuarios', 'UserController@index')->name('usuarios');

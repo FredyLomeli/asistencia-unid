@@ -15,6 +15,7 @@ class CreateConveniosTable extends Migration
     {
         Schema::create('convenios', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('users_id');
             $table->bigInteger('empresas_id')->default(0);
             $table->bigInteger('escuelas_id')->default(0);
             $table->tinyInteger('conv_promo')->default(0);
@@ -28,7 +29,8 @@ class CreateConveniosTable extends Migration
             $table->string('nombre_representante');
             $table->string('cargo_representante');
             $table->string('correo_representante');
-            $table->string('telefono_representante');
+            $table->string('telefono_representante', 30);
+            $table->string('user_edit')->nullable();
             //Adicionales
             $table->text('comentario', '500')->nullable();
             $table->string('adicional1')->nullable();
